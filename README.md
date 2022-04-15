@@ -11,7 +11,7 @@ For more information, please execute `korai -h`
 
 - Run a tutorial: `korai -t`
 - Maximize the window: `korai -m`
-- Set default window size: `korai <width>x<height>` (Note the 'x')
+- Set default window size: `korai -s <width>x<height>` (Note the 'x')
 
 # Shortcuts
 To make life easier, Korai supports some shortcuts:
@@ -44,3 +44,15 @@ The program will be in the `build/` directory
 # Screenshots
 
 ![Korai](https://user-images.githubusercontent.com/48135147/163577957-b9fdc19d-827a-40d3-8cfc-e0f36930a505.png)
+
+# Troubleshooting
+1. The window is completely blank!
+- There's an issue surrounding WebKitGtk that produces this problem, to solve it, please run the following commands:
+```
+rm ~/.local/share/mime/packages/user-extension-html.xml
+update-mime-database ~/.local/share/mime
+```
+2. Hey, a weird file named `index.html` and a folder named `tmp` have appeared!
+- These two files are crucial for the operation of Korai. Don't worry, when the program is closed, they will be deleted.
+3. Hey, a weird file named `chapter.conf` has appeared and doesn't get deleted after closing!
+- This file is where Korai saves the last chapter the user was reading. Its path can be changed using the `korai -f /path/to/save_file.conf` command
