@@ -13,6 +13,12 @@ For more information, please execute `korai -h`
 - Maximize the window: `korai -m`
 - Set default window size: `korai <width>x<height>` (Note the 'x')
 
+# Shortcuts
+To make life easier, Korai supports some shortcuts:
+- Pressing 'o' will will open a dialog to open a file
+- Pressing left arrow will change to the previous chapter
+- Pressing right arrow will change to the next chapter 
+
 # Dependencies
 Korai requires: <br>
 1. **A compiler that supports C++17 (GCC > 5.0)**<br>
