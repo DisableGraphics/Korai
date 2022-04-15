@@ -1,6 +1,8 @@
 # Korai
 Next generation manga reader
 
+![Korai](https://user-images.githubusercontent.com/48135147/163577957-b9fdc19d-827a-40d3-8cfc-e0f36930a505.png)
+
 # Features
 - **Fast:** Despite using WebKitGtk, a port of an _entire_ browser engine to GTK, Korai is incredibly fast loading chapters.
 - **Reliable:** Works with manga/comic names that contain unusual characters and doesn't crash for no reason.
@@ -40,10 +42,6 @@ cd Korai
 make
 ```
 The program will be in the `build/` directory
-
-# Screenshots
-
-![Korai](https://user-images.githubusercontent.com/48135147/163577957-b9fdc19d-827a-40d3-8cfc-e0f36930a505.png)
 
 # Troubleshooting
 1. The window is completely blank!
