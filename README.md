@@ -6,6 +6,7 @@ Getting used to Korai's command line options is practically a must. You can just
 
 # Dependencies
 Korai requires:
+**A compiler that supports C++17 (GCC > 5.0)**<br>
 **Gtkmm 3**
 - Ubuntu & Debian: `sudo apt install libgtkmm-3.0-dev`
 - Arch: `sudo pacman -S gtkmm3` <br>
