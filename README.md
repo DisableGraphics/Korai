@@ -10,9 +10,12 @@ Korai requires: <br>
 2. **Gtkmm 3**
 - Ubuntu & Debian: `sudo apt install libgtkmm-3.0-dev`
 - Arch: `sudo pacman -S gtkmm3`<br>
-3. **WebKit2Gtk** <ul>
+3. **WebKit2Gtk**
 - Ubuntu & Debian: `sudo apt install libwebkit2gtk-4.0-dev`
-- Arch `sudo pacman -S webkit2gtk-4.0`
+- Arch: `sudo pacman -S webkit2gtk-4.0`
+4. **Unzip**
+- Ubuntu & Debian: `sudo apt install unzip`
+- Arch: `sudo pacman -S unzip` 
 
 # Building
 To build Korai, please enter the following commands:
