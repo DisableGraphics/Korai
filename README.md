@@ -5,7 +5,7 @@ Next generation manga reader
 Getting used to Korai's command line options is practically a must. You can just run `korai` from the command line and the program won't have any issues with it, but there are some pre-defined options that may not suit the user's preferences. For more information, please run `korai -h` to see all the available options.
 
 # Dependencies
-Korai requires:
+Korai requires: <br>
 **A compiler that supports C++17 (GCC > 5.0)**<br>
 **Gtkmm 3**
 - Ubuntu & Debian: `sudo apt install libgtkmm-3.0-dev`
