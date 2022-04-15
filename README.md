@@ -1,6 +1,11 @@
 # Korai
 Next generation manga reader
 
+# Features
+- Fast: Despite using WebKitGtk, a port of an _entire_ browser engine to GTK, Korai is incredibly fast loading chapters.
+- Reliable: Works with manga/comic names that contain unusual characters and doesn't crash for no reason.
+- Easy to use: Everything is where it should be. No previous configuration required for almost anything.
+
 # Usage
 Getting used to Korai's command line options is practically a must. With just running `korai` from the command line the program won't have any issues with it, but there are some pre-defined options that may not suit the user's preferences. For more information, please run `korai -h` to see all the available options.
 
