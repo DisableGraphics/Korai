@@ -54,3 +54,5 @@ update-mime-database ~/.local/share/mime
 - These two files are crucial for the operation of Korai. Don't worry, when the program is closed, they will be deleted.
 3. Hey, a weird file named `chapter.conf` has appeared and doesn't get deleted after closing!
 - This file is where Korai saves the last chapter the user was reading. Its path can be changed using the `korai -f /path/to/save_file.conf` command
+4. Hey, there's no Windows version!
+- WebKitGtk doesn't support Windows and so does Korai
