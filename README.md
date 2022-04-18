@@ -45,11 +45,8 @@ The program will be in the `build/` directory
 
 # Troubleshooting
 1. The window is completely blank!
-- There's an issue surrounding WebKitGtk that produces this problem, to solve it, please run the following commands:
-```
-rm ~/.local/share/mime/packages/user-extension-html.xml
-update-mime-database ~/.local/share/mime
-```
+- There's an issue surrounding WebKitGTK that can be traced to a faulty MIME types database (<a href= https://stackoverflow.com/questions/71734719/webkitgtk-doesnt-load-local-files>More information here</a>). To correct this, please open Korai and click the button named "Reload MIME types" (Under the menu button).
+
 2. Hey, a weird file named `index.html` and a folder named `tmp` have appeared!
 - These two files are crucial for the operation of Korai. Don't worry, when the program is closed, they will be deleted.
 3. Hey, a weird file named `chapter.conf` has appeared and doesn't get deleted after closing!
