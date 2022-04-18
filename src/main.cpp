@@ -473,18 +473,18 @@ int main( int argc, char **argv)
   if(tutorial)
   {
      help::tutorial(webview);
+     titleBar.set_subtitle("Tutorial");
   }
   else
   {
     load_homepage(webview);
+    on_load(webview, titleBar);
   }
   
   window.add( *webview_widget );
 
   window.set_titlebar(titleBar);
   titleBar.set_show_close_button();
-
-  on_load(webview, titleBar);
 
   window.show_all();
   
