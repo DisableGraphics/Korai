@@ -375,7 +375,7 @@ void about()
   dialog.set_logo(pix);
   dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
   dialog.show_all();
-  Gtk::Widget * but = dialog.get_action_area()->get_children()[1]; //The "License" button wouldn't hide automatically, so I made it forcefully hide
+  Gtk::Widget * but = dialog.get_action_area()->get_children()[1]; //The "License" button wouldn't hide automatically, so I forced it to
   but->hide();
   dialog.run();
 }
