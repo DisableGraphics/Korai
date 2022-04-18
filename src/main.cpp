@@ -487,7 +487,7 @@ int main( int argc, char **argv)
   on_load(webview, titleBar);
 
   window.show_all();
-
+  
   webkit_web_view_reload(webview);
   openButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open), webview, &titleBar));
   nextButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(next_chapter), webview, &titleBar));
