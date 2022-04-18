@@ -13,6 +13,7 @@
 #include <cstdlib>
 #include <gtkmm.h>
 #include <iostream>
+#include "icon.c"
 #include <fstream>
 #include <filesystem>
 #include <tuple>
@@ -32,6 +33,11 @@
 #include "sigc++/functors/ptr_fun.h"
 #include "externalFunctions.h"
 #include "strnatcmp.hpp"
+
+/*
+  SPECIAL THANKS TO:
+    - https://stackoverflow.com/questions/24114660/how-to-compile-an-image-file-as-icon-into-an-exe-using-gtk-as-gui
+*/
 
 //Position in the folder
 int position{-1};
@@ -368,6 +374,8 @@ void about()
   dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
   dialog.set_website("https://github.com/DisableGraphics/Korai");
   dialog.set_program_name("Korai");
+  Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_inline(-1, icon_1);
+  dialog.set_logo(pix);
   dialog.set_license("Licensed under the GPL v3");
   dialog.set_comments("Next generation manga reader");
   dialog.show_all();
@@ -507,6 +515,8 @@ int main( int argc, char **argv)
   {
     window.maximize();
   }
+
+  Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_inline(-1, icon_1);
   
   WebKitWebView * webview =  WEBKIT_WEB_VIEW( webkit_web_view_new_with_settings(settings) );
   /*
@@ -528,6 +538,7 @@ int main( int argc, char **argv)
   titleBar.set_border_width(1);
   
   window.add( *webview_widget );
+  window.set_icon(pix);
 
   window.set_titlebar(titleBar);
   titleBar.set_show_close_button();
