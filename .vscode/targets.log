@@ -1,0 +1,346 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Mon Apr 18 10:03:37 2022
+
+# Variables
+
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+NO_AT_BRIDGE = 1
+# environment
+CVSROOT = :pserver:anonymous@cvs.hercules-390.org:/usr/cvs/hercules
+# environment
+WTK_HOME = /opt/sun-wtk
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d3914cdc-2c78-4c52-8937-11ceaba9b246.sock
+# environment
+LC_NAME = es_ES.UTF-8
+# environment
+LC_NUMERIC = es_ES.UTF-8
+# environment
+VSCODE_CWD = /home/disablegraphics
+# environment
+LC_ADDRESS = es_ES.UTF-8
+# default
+MAKE_COMMAND := make
+# environment
+GTK3_MODULES = xapp-gtk3-module
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/disablegraphics/Projects/C++Projs/Korai
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+MAIL = /var/spool/mail/disablegraphics
+# environment
+XDG_DATA_DIRS = /home/disablegraphics/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+VSCODE_LOG_STACK = false
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/disablegraphics/.config/Code - OSS/CachedData/e18005f0f1b33c29e81d732535d8c0e47cafb0b5
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+# environment
+LANG = C
+# environment
+XAUTHORITY = /home/disablegraphics/.Xauthority
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# environment
+GTK_USE_PORTAL = 1
+# makefile
+CURDIR := /home/disablegraphics/Projects/C++Projs/Korai
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+# default
+.SHELLFLAGS := -c
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+XDG_SESSION_DESKTOP = mate
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 10941
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+SESSION_MANAGER = local/HorchataBook:@/tmp/.ICE-unix/1163,unix/HorchataBook:/tmp/.ICE-unix/1163
+# automatic
+*F = $(notdir $*)
+# environment
+QT_QPA_PLATFORMTHEME = qt5ct
+# environment
+CHROME_DESKTOP = code-oss.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+QT_SCALE_FACTOR = 1
+# environment
+VSCODE_NLS_CONFIG = {"locale":"es","availableLanguages":{"*":"es"},"_languagePackId":"81204e1a79a1a53aa2a74c293087d05a.es","_translationsConfigFile":"/home/disablegraphics/.config/Code - OSS/clp/81204e1a79a1a53aa2a74c293087d05a.es/tcf.json","_cacheRoot":"/home/disablegraphics/.config/Code - OSS/clp/81204e1a79a1a53aa2a74c293087d05a.es","_resolvedLanguagePackCoreLocation":"/home/disablegraphics/.config/Code - OSS/clp/81204e1a79a1a53aa2a74c293087d05a.es/e18005f0f1b33c29e81d732535d8c0e47cafb0b5","_corruptedFile":"/home/disablegraphics/.config/Code - OSS/clp/81204e1a79a1a53aa2a74c293087d05a.es/corrupted.info","_languagePackSupport":true}
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=fcitx
+# environment
+DOTNET_BUNDLE_EXTRACT_BASE_DIR = /home/disablegraphics/.cache/dotnet_bundle_extract
+# environment
+SHLVL = 0
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/home/disablegraphics/.dotnet/tools:/usr/lib/emscripten:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:/opt/sun-wtk/bin
+# default
+MAKEFILES := 
+# environment
+LC_MONETARY = es_ES.UTF-8
+# environment
+MOTD_SHOWN = pam
+# automatic
+^F = $(notdir $^)
+# environment
+MATE_DESKTOP_SESSION_ID = this-is-deprecated
+# environment
+LC_TIME = es_ES.UTF-8
+# environment
+GRADLE_HOME = /usr/share/java/gradle
+# environment
+VSCODE_LOG_NATIVE = false
+# environment
+LC_TELEPHONE = es_ES.UTF-8
+# automatic
+?F = $(notdir $?)
+# environment
+XDG_SEAT = seat0
+# environment
+GTK_IM_MODULE = fcitx
+# environment
+XDG_CURRENT_DESKTOP = MATE
+# automatic
++F = $(notdir $+)
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+DESKTOP_SESSION = mate
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = MATE
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = disablegraphics
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /home/disablegraphics/Escritorio/code-oss.desktop
+# environment
+XDG_VTNR = 7
+# makefile
+.DEFAULT_GOAL := all
+# environment
+EDITOR = nano
+# environment
+DISPLAY = :0
+# environment
+GTK_MODULES = canberra-gtk-module
+# environment
+USER = disablegraphics
+# default
+MAKE_VERSION := 4.3
+# environment
+QT_FONT_DPI = 96
+# environment
+LC_MEASUREMENT = es_ES.UTF-8
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 10928
+# environment
+_ = /usr/bin/make
+# environment
+LC_PAPER = es_ES.UTF-8
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GTK_OVERLAY_SCROLLING = 0
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /home/disablegraphics
+# environment
+QT_IM_MODULE = fcitx
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-bced12ff-1.66.0-main.sock
+# environment
+HG = /usr/bin/hg
+# environment
+XDG_SESSION_ID = 2
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
+# environment
+VSCODE_CLI = 1
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/disablegraphics
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
+# environment
+DOTNET_ROOT = /usr/share/dotnet
+# environment
+MGFXC_WINE_PATH = /home/disablegraphics/.winemonogame
+# environment
+GDMSESSION = mate
+# environment
+LC_IDENTIFICATION = es_ES.UTF-8
+# variable set hash-table stats:
+# Load=115/1024=11%, Rehash=0, Collisions=7/148=5%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 2049, inode 17171271): 12 files, no impossibilities.
+
+# 12 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-15 22:29:13.443880282
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all:
+#  Command line target.
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  File does not exist.
+ 
+#  File has been updated.
+ 
+#  Needs to be updated (-q is set).
+ 
+# automatic
+ 
+# @ := all
+ 
+# automatic
+ 
+# * := 
+ 
+# automatic
+ 
+# < := 
+ 
+# automatic
+ 
+# + := 
+ 
+# automatic
+ 
+# % := 
+ 
+# automatic
+ 
+# ^ := 
+ 
+# automatic
+ 
+# ? := 
+ 
+# automatic
+ 
+# | := 
+ 
+# variable set hash-table stats:
+ 
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+ 
+#  recipe to execute (from 'Makefile', line 2):
+	mkdir build & g++ src/main.cpp `pkg-config gtkmm-3.0 --libs --cflags` `pkg-config webkit2gtk-4.0 --libs --cflags` -std=c++17 -o build/korai
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=4/1024=0%, Rehash=0, Collisions=0/16=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 17 / storage = 147 B / avg = 8 B
+# current buf: size = 8162 B / used = 147 B / count = 17 / avg = 8 B
+
+# strcache performance: lookups = 24 / hit rate = 29%
+# hash-table stats:
+# Load=17/8192=0%, Rehash=0, Collisions=0/24=0%
+# Finished Make data base on Mon Apr 18 10:03:37 2022
+
+ 

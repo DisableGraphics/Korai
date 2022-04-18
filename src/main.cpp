@@ -15,6 +15,7 @@
 #include <tuple>
 #include <webkit2/webkit2.h>
 #include <webkitdom/webkitdom.h>
+#include "gtkmm/label.h"
 #include "gtkmm/menu.h"
 #include "gtkmm/menubutton.h"
 #include "gtkmm/menuitem.h"
@@ -343,6 +344,32 @@ void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
   std::filesystem::create_directory(((std::string)std::filesystem::current_path() + "/tmp/"));
 }
 
+//Reloads the MIME database, which has been failing in recent versions of WebKitGTK
+void reloadMIME(WebKitWebView * webView)
+{
+  system("rm ~/.local/share/mime/packages/user-extension-html.xml");
+  system("update-mime-database ~/.local/share/mime");
+
+  Gtk::Dialog okdialog{"Finished reloading"};
+  Gtk::Button * button = okdialog.add_button("OK", GTK_RESPONSE_ACCEPT);
+  button->set_hexpand();
+  Gtk::Image img;
+  img.set_from_icon_name("dialog-information", (Gtk::IconSize)GTK_ICON_SIZE_DIALOG);
+  Gtk::Box * box;
+  box = okdialog.get_content_area();
+  box->pack_start(img);
+  Gtk::Label okmessage{"Finished reloading the database"};
+  box->pack_start(okmessage);
+  okdialog.show_all();
+  switch(okdialog.run())
+  {
+    case GTK_RESPONSE_ACCEPT:
+      okdialog.close();
+      break;
+  }
+  webkit_web_view_reload(webView);
+}
+
 //This is executed when there's a keypress
 bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
@@ -368,6 +395,8 @@ int main( int argc, char **argv)
   bool tutorial{false};
   //Maximizes the window if true
   bool fullscreen{false};
+  //Returns 0 if true
+  bool goBack{false};
 
   std::string currentFolder{std::filesystem::current_path()};
   saveFile = (std::string)std::filesystem::current_path() + "/chapter.conf";
@@ -376,37 +405,11 @@ int main( int argc, char **argv)
   //Looks at the args
   if(argc >= 2)
   {
-    for(int i{1}; i < argc; i++)
-    {
-      if(strcmp(argv[i], "-s") == 0 || strcmp(argv[i], "--size") == 0)
-      {
-        i++;
-        defsize = args::extractSizes(argv[i]);
-      }
-      else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
-      {
-        help::displayHelp();
-        return 0;
-      }
-      else if (strcmp(argv[i], "-f") == 0 || strcmp(argv[i], "--save-file") == 0)
-      {
-        i++;
-        saveFile = argv[i];
-      }
-      else if(strcmp(argv[i], "-m") == 0 || strcmp(argv[i], "--maximized") == 0)
-      {
-        fullscreen = true;
-      }
-      else if(strcmp(argv[i], "-t") == 0 || strcmp(argv[i], "--tutorial") == 0)
-      {
-        tutorial = true;
-      }
-      else
-      {
-        std::cout << "Argument \"" << argv[i] << "\" not recognized\n";
-        return EXIT_FAILURE;
-      }
-    }
+    args::parseArgs(argc, argv, fullscreen, tutorial, defsize, saveFile, goBack);
+  }
+  if(goBack)
+  {
+    return 0;
   }
   
   Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
@@ -420,15 +423,16 @@ int main( int argc, char **argv)
   menubutton.set_image_from_icon_name("open-menu-symbolic");
   Gtk::Button nextButton, previousButton, openButton;
   Gtk::Button deleteButton, closeButton;
+  Gtk::Button reloadMIMEbutton;
   deleteButton.set_relief(Gtk::RELIEF_NONE);
   closeButton.set_relief(Gtk::RELIEF_NONE);
-
-  //titleBar.pack_end(deleteButton);
-  //titleBar.pack_end(closeButton);
+  reloadMIMEbutton.set_relief(Gtk::RELIEF_NONE);
   Gtk::VBox menuBox;
 
   menuBox.pack_start(closeButton);
+  menuBox.pack_end(reloadMIMEbutton);
   menuBox.pack_end(deleteButton);
+  
 
   menu.add(menuBox);
   menu.show_all();
@@ -444,6 +448,7 @@ int main( int argc, char **argv)
 
   deleteButton.set_label("Delete manga");
   closeButton.set_label("Close manga");
+  reloadMIMEbutton.set_label("Reload MIME types");
   
   buttonsBox.pack_start(previousButton);
   buttonsBox.pack_start(openButton);
@@ -494,6 +499,7 @@ int main( int argc, char **argv)
   previousButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(previous_chapter), webview, &titleBar));
   deleteButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(delete_manga), webview, &titleBar, &menu));
   closeButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(close_manga), webview, &titleBar, &menu));
+  reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), webview));
   window.signal_key_press_event().connect(sigc::bind(sigc::ptr_fun(on_key_pressed), webview, &titleBar), false);
 
   window.signal_delete_event().connect(sigc::bind(sigc::ptr_fun(&on_close), app));
