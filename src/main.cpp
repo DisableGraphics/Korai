@@ -15,6 +15,7 @@
 #include <tuple>
 #include <webkit2/webkit2.h>
 #include <webkitdom/webkitdom.h>
+#include "gtkmm/image.h"
 #include "gtkmm/label.h"
 #include "gtkmm/menu.h"
 #include "gtkmm/menubutton.h"
@@ -268,9 +269,21 @@ void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk::Popove
 {
   if(position != -1){
     Gtk::Dialog delete_dialog {"Are you sure?"};
+    Gtk::Box * box = delete_dialog.get_content_area();
 
-    delete_dialog.add_button("Delete", GTK_RESPONSE_ACCEPT);
+    Gtk::Image img;
+    img.set_from_icon_name("dialog-warning", (Gtk::IconSize)GTK_ICON_SIZE_DIALOG);
+
+    box->pack_start(img);
+
+    Gtk::Label label{"Are you sure?"};
+    box->pack_end(label);
+
+    
     delete_dialog.add_button("Cancel", GTK_RESPONSE_CANCEL);
+    delete_dialog.add_button("Delete", GTK_RESPONSE_ACCEPT);
+
+    delete_dialog.show_all();
   
     if(delete_dialog.run() == GTK_RESPONSE_ACCEPT)
     {
@@ -356,11 +369,15 @@ void reloadMIME(WebKitWebView * webView)
   Gtk::Image img;
   img.set_from_icon_name("dialog-information", (Gtk::IconSize)GTK_ICON_SIZE_DIALOG);
   Gtk::Box * box;
+
   box = okdialog.get_content_area();
+  
   box->pack_start(img);
   Gtk::Label okmessage{"Finished reloading the database"};
   box->pack_start(okmessage);
+  
   okdialog.show_all();
+
   switch(okdialog.run())
   {
     case GTK_RESPONSE_ACCEPT:
