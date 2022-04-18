@@ -35,8 +35,6 @@
 #include "strnatcmp.hpp"
 
 /*
-  SPECIAL THANKS TO:
-    - https://stackoverflow.com/questions/24114660/how-to-compile-an-image-file-as-icon-into-an-exe-using-gtk-as-gui
 */
 
 //Position in the folder
