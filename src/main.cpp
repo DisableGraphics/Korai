@@ -1,4 +1,7 @@
+#include "gdkmm/pixbuf.h"
+#include "gdkmm/rgba.h"
 #include "glibmm/refptr.h"
+#include "gtkmm/aboutdialog.h"
 #include "gtkmm/accelgroup.h"
 #include "gtkmm/dialog.h"
 #include "gtkmm/enums.h"
@@ -357,6 +360,20 @@ void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
   std::filesystem::create_directory(((std::string)std::filesystem::current_path() + "/tmp/"));
 }
 
+//Executed when the user clicks on the "about" button
+void about()
+{
+  Gtk::AboutDialog dialog;
+  dialog.set_authors({"DisableGraphics"});
+  dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
+  dialog.set_website("https://github.com/DisableGraphics/Korai");
+  dialog.set_program_name("Korai");
+  dialog.set_license("Licensed under the GPL v3");
+  dialog.set_comments("Next generation manga reader");
+  dialog.show_all();
+  dialog.run();
+}
+
 //Reloads the MIME database, which has been failing in recent versions of WebKitGTK
 void reloadMIME(WebKitWebView * webView)
 {
@@ -441,15 +458,18 @@ int main( int argc, char **argv)
   Gtk::Button nextButton, previousButton, openButton;
   Gtk::Button deleteButton, closeButton;
   Gtk::Button reloadMIMEbutton;
+  Gtk::Button aboutButton;
   deleteButton.set_relief(Gtk::RELIEF_NONE);
   closeButton.set_relief(Gtk::RELIEF_NONE);
   reloadMIMEbutton.set_relief(Gtk::RELIEF_NONE);
+  aboutButton.set_relief(Gtk::RELIEF_NONE);
   Gtk::VBox menuBox;
 
   menuBox.pack_start(closeButton);
-  menuBox.pack_end(reloadMIMEbutton);
-  menuBox.pack_end(deleteButton);
-  
+  menuBox.pack_start(deleteButton);
+  menuBox.pack_start(reloadMIMEbutton);
+
+  menuBox.pack_end(aboutButton); //This button must be always on the end
 
   menu.add(menuBox);
   menu.show_all();
@@ -466,6 +486,7 @@ int main( int argc, char **argv)
   deleteButton.set_label("Delete manga");
   closeButton.set_label("Close manga");
   reloadMIMEbutton.set_label("Reload MIME types");
+  aboutButton.set_label("About");
   
   buttonsBox.pack_start(previousButton);
   buttonsBox.pack_start(openButton);
@@ -517,6 +538,7 @@ int main( int argc, char **argv)
   deleteButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(delete_manga), webview, &titleBar, &menu));
   closeButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(close_manga), webview, &titleBar, &menu));
   reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), webview));
+  aboutButton.signal_clicked().connect(sigc::ptr_fun(about));
   window.signal_key_press_event().connect(sigc::bind(sigc::ptr_fun(on_key_pressed), webview, &titleBar), false);
 
   window.signal_delete_event().connect(sigc::bind(sigc::ptr_fun(&on_close), app));
