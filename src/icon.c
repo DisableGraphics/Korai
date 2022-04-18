@@ -1,5 +1,9 @@
 /* GdkPixbuf RGBA C-Source image dump */
 
+/*
+  Yes, this is actually Korai's icon, in a humongous char array
+*/
+
 #ifdef __SUNPRO_C
 #pragma align 4 (icon_1)
 #endif
