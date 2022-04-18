@@ -369,14 +369,14 @@ void about()
 {
   Gtk::AboutDialog dialog;
   dialog.set_authors({"DisableGraphics"});
-  dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
   dialog.set_website("https://github.com/DisableGraphics/Korai");
   dialog.set_program_name("Korai");
   Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_inline(-1, icon_1);
   dialog.set_logo(pix);
-  dialog.set_license("Licensed under the GPL v3");
-  dialog.set_comments("Next generation manga reader");
+  dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
   dialog.show_all();
+  Gtk::Widget * but = dialog.get_action_area()->get_children()[1]; //The "License" button wouldn't hide automatically, so I made it forcefully hide
+  but->hide();
   dialog.run();
 }
 
