@@ -477,7 +477,7 @@ int main( int argc, char **argv)
   menuBox.pack_start(deleteButton);
   menuBox.pack_start(reloadMIMEbutton);
 
-  menuBox.pack_end(aboutButton); //This button must be always on the end
+  menuBox.pack_end(aboutButton); //This button must be at the end
 
   menu.add(menuBox);
   menu.show_all();
