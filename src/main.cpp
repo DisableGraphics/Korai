@@ -380,6 +380,7 @@ void reloadMIME(WebKitWebView * webView)
   system("rm ~/.local/share/mime/packages/user-extension-html.xml");
   system("update-mime-database ~/.local/share/mime");
 
+  //Notifies the user that the database has finished reloading
   Gtk::Dialog okdialog{"Finished reloading"};
   Gtk::Button * button = okdialog.add_button("OK", GTK_RESPONSE_ACCEPT);
   button->set_hexpand();
@@ -425,6 +426,7 @@ bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::HeaderBar 
 int main( int argc, char **argv)
 {
   //Bunch of bools used for some things
+
   //Loads the tutorial if true
   bool tutorial{false};
   //Maximizes the window if true
@@ -523,6 +525,7 @@ int main( int argc, char **argv)
     load_homepage(webview);
     on_load(webview, titleBar);
   }
+  titleBar.set_border_width(1);
   
   window.add( *webview_widget );
 
