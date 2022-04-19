@@ -55,7 +55,7 @@ namespace help{
         std::string tutorial_uri{"file://" + (std::string)std::filesystem::current_path() + "/tutorial.html"};
         webkit_web_view_load_uri(webView, tutorial_uri.c_str());
         popover->hide();
-        titlebar->set_subtitle("");
+        titlebar->set_subtitle("Tutorial");
 
     }
 }
