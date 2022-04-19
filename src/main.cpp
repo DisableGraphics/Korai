@@ -3,6 +3,7 @@
 #include "glibmm/refptr.h"
 #include "gtkmm/aboutdialog.h"
 #include "gtkmm/accelgroup.h"
+#include "gtkmm/box.h"
 #include "gtkmm/dialog.h"
 #include "gtkmm/enums.h"
 #include "gtkmm/filechooser.h"
@@ -477,8 +478,8 @@ int main( int argc, char **argv)
   Gtk::VBox menuBox;
   Gtk::Separator sep1, sepabout, sep2;
 
-  menuBox.pack_start(closeButton);
-  menuBox.pack_start(deleteButton);
+  menuBox.pack_start(closeButton );
+  menuBox.pack_start(deleteButton );
   menuBox.pack_start(sep1);
   menuBox.pack_start(reloadMIMEbutton);
   menuBox.pack_start(sep2);
