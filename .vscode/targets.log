@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Apr 18 10:03:37 2022
+# Make data base, printed on Tue Apr 19 20:00:51 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ CVSROOT = :pserver:anonymous@cvs.hercules-390.org:/usr/cvs/hercules
 # environment
 WTK_HOME = /opt/sun-wtk
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d3914cdc-2c78-4c52-8937-11ceaba9b246.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8be362d1-bd80-4742-aa17-c98ddd92e39c.sock
 # environment
 LC_NAME = es_ES.UTF-8
 # environment
@@ -95,13 +95,13 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 10941
+VSCODE_PID = 9804
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/HorchataBook:@/tmp/.ICE-unix/1163,unix/HorchataBook:/tmp/.ICE-unix/1163
+SESSION_MANAGER = local/HorchataBook:@/tmp/.ICE-unix/1153,unix/HorchataBook:/tmp/.ICE-unix/1153
 # automatic
 *F = $(notdir $*)
 # environment
@@ -193,7 +193,7 @@ QT_FONT_DPI = 96
 # environment
 LC_MEASUREMENT = es_ES.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 10928
+GIO_LAUNCHED_DESKTOP_FILE_PID = 9791
 # environment
 _ = /usr/bin/make
 # environment
@@ -249,9 +249,9 @@ LC_IDENTIFICATION = es_ES.UTF-8
 
 # Directories
 
-# . (device 2049, inode 17171271): 12 files, no impossibilities.
+# . (device 2049, inode 17171271): 13 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -279,45 +279,25 @@ all:
 #  File does not exist.
  
 #  File has been updated.
- 
 #  Needs to be updated (-q is set).
- 
 # automatic
- 
 # @ := all
- 
 # automatic
- 
 # * := 
- 
 # automatic
- 
 # < := 
- 
 # automatic
- 
 # + := 
- 
 # automatic
- 
 # % := 
- 
 # automatic
- 
 # ^ := 
- 
 # automatic
- 
 # ? := 
- 
 # automatic
- 
 # | := 
- 
 # variable set hash-table stats:
- 
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
- 
 #  recipe to execute (from 'Makefile', line 2):
 	mkdir build & g++ src/main.cpp `pkg-config gtkmm-3.0 --libs --cflags` `pkg-config webkit2gtk-4.0 --libs --cflags` -std=c++17 -o build/korai
 
@@ -335,12 +315,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 17 / storage = 147 B / avg = 8 B
-# current buf: size = 8162 B / used = 147 B / count = 17 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 18 / storage = 158 B / avg = 8 B
+# current buf: size = 8162 B / used = 158 B / count = 18 / avg = 8 B
 
-# strcache performance: lookups = 24 / hit rate = 29%
+# strcache performance: lookups = 25 / hit rate = 28%
 # hash-table stats:
-# Load=17/8192=0%, Rehash=0, Collisions=0/24=0%
-# Finished Make data base on Mon Apr 18 10:03:37 2022
+# Load=18/8192=0%, Rehash=0, Collisions=0/25=0%
+# Finished Make data base on Tue Apr 19 20:00:51 2022
 
  
