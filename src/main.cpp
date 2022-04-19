@@ -13,7 +13,7 @@
 #include <cstdlib>
 #include <gtkmm.h>
 #include <iostream>
-#include "icon.c"
+#include "icon.xpm"
 #include <fstream>
 #include <filesystem>
 #include <tuple>
@@ -371,7 +371,7 @@ void about()
   dialog.set_authors({"DisableGraphics"});
   dialog.set_website("https://github.com/DisableGraphics/Korai");
   dialog.set_program_name("Korai");
-  Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_inline(-1, icon_1);
+  Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
   dialog.set_logo(pix);
   dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
   dialog.set_copyright("Made by DisableGraphics");
@@ -518,7 +518,7 @@ int main( int argc, char **argv)
     window.maximize();
   }
 
-  Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_inline(-1, icon_1);
+  Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
   
   WebKitWebView * webview =  WEBKIT_WEB_VIEW( webkit_web_view_new_with_settings(settings) );
   /*
