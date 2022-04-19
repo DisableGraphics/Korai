@@ -539,7 +539,6 @@ int main( int argc, char **argv)
   if(tutorial)
   {
      help::tutorial(webview, &menu, &position, &file, &folder, &titleBar);
-     titleBar.set_subtitle("Tutorial");
   }
   else
   {
