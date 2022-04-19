@@ -13,6 +13,7 @@
 #include <cstdlib>
 #include <gtkmm.h>
 #include <iostream>
+#include "gtkmm/separator.h"
 #include "icon.xpm"
 #include <fstream>
 #include <filesystem>
@@ -465,22 +466,26 @@ int main( int argc, char **argv)
   
   menubutton.set_image_from_icon_name("open-menu-symbolic");
   Gtk::Button nextButton, previousButton, openButton;
-  Gtk::Button deleteButton, closeButton;
-  Gtk::Button reloadMIMEbutton;
-  Gtk::Button aboutButton, tutorialButton;
+  Gtk::ModelButton deleteButton, closeButton;
+  Gtk::ModelButton reloadMIMEbutton;
+  Gtk::ModelButton aboutButton, tutorialButton;
   deleteButton.set_relief(Gtk::RELIEF_NONE);
   closeButton.set_relief(Gtk::RELIEF_NONE);
   reloadMIMEbutton.set_relief(Gtk::RELIEF_NONE);
   aboutButton.set_relief(Gtk::RELIEF_NONE);
   tutorialButton.set_relief(Gtk::RELIEF_NONE);
   Gtk::VBox menuBox;
+  Gtk::Separator sep1, sepabout, sep2;
 
   menuBox.pack_start(closeButton);
   menuBox.pack_start(deleteButton);
+  menuBox.pack_start(sep1);
   menuBox.pack_start(reloadMIMEbutton);
+  menuBox.pack_start(sep2);
   menuBox.pack_start(tutorialButton);
 
   menuBox.pack_end(aboutButton); //This button must be at the end
+  menuBox.pack_end(sepabout); //Preceeded by a separator
 
   menu.add(menuBox);
   menu.show_all();
