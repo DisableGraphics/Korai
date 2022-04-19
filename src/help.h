@@ -3,6 +3,8 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <webkit2/webkit2.h>
+#include <gtkmm.h>
+#include "gtkmm/headerbar.h"
 #include "web_contents.h"
 #include <fstream>
 #include <filesystem>
@@ -29,8 +31,11 @@ namespace help{
             std::cout << "-";
         }
     }
-    inline void tutorial(WebKitWebView * webView) //Creates the tutorial and loads it
+    inline void tutorial(WebKitWebView * webView, Gtk::Popover * popover, int * position, std::string * file, std::string * folder, Gtk::HeaderBar * titlebar) //Creates the tutorial and loads it
     {
+        *file = "";
+        *position = -1;
+        *folder = "";
         std::string tutorial{""};
         tutorial += "<html>";
         tutorial += "<style>" + css::css + "</style>";
@@ -49,6 +54,8 @@ namespace help{
         tutorial_file.close();
         std::string tutorial_uri{"file://" + (std::string)std::filesystem::current_path() + "/tutorial.html"};
         webkit_web_view_load_uri(webView, tutorial_uri.c_str());
+        popover->hide();
+        titlebar->set_subtitle("");
 
     }
 }

@@ -467,16 +467,18 @@ int main( int argc, char **argv)
   Gtk::Button nextButton, previousButton, openButton;
   Gtk::Button deleteButton, closeButton;
   Gtk::Button reloadMIMEbutton;
-  Gtk::Button aboutButton;
+  Gtk::Button aboutButton, tutorialButton;
   deleteButton.set_relief(Gtk::RELIEF_NONE);
   closeButton.set_relief(Gtk::RELIEF_NONE);
   reloadMIMEbutton.set_relief(Gtk::RELIEF_NONE);
   aboutButton.set_relief(Gtk::RELIEF_NONE);
+  tutorialButton.set_relief(Gtk::RELIEF_NONE);
   Gtk::VBox menuBox;
 
   menuBox.pack_start(closeButton);
   menuBox.pack_start(deleteButton);
   menuBox.pack_start(reloadMIMEbutton);
+  menuBox.pack_start(tutorialButton);
 
   menuBox.pack_end(aboutButton); //This button must be at the end
 
@@ -496,6 +498,7 @@ int main( int argc, char **argv)
   closeButton.set_label("Close manga");
   reloadMIMEbutton.set_label("Reload MIME types");
   aboutButton.set_label("About");
+  tutorialButton.set_label("Tutorial");
   
   buttonsBox.pack_start(previousButton);
   buttonsBox.pack_start(openButton);
@@ -524,16 +527,7 @@ int main( int argc, char **argv)
    * Glib::wrap( GTK_WIDGET( one ) ) -> convert GtkWidget to Gtk::Widget (two->three)
    */
   Gtk::Widget * webview_widget = Glib::wrap( GTK_WIDGET( webview ) );
-  if(tutorial)
-  {
-     help::tutorial(webview);
-     titleBar.set_subtitle("Tutorial");
-  }
-  else
-  {
-    load_homepage(webview);
-    on_load(webview, titleBar);
-  }
+ 
   titleBar.set_border_width(1);
   
   window.add( *webview_widget );
@@ -541,6 +535,17 @@ int main( int argc, char **argv)
 
   window.set_titlebar(titleBar);
   titleBar.set_show_close_button();
+
+  if(tutorial)
+  {
+     help::tutorial(webview, &menu, &position, &file, &folder, &titleBar);
+     titleBar.set_subtitle("Tutorial");
+  }
+  else
+  {
+    load_homepage(webview);
+    on_load(webview, titleBar);
+  }
 
   window.show_all();
   
@@ -551,6 +556,8 @@ int main( int argc, char **argv)
   deleteButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(delete_manga), webview, &titleBar, &menu));
   closeButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(close_manga), webview, &titleBar, &menu));
   reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), webview));
+  tutorialButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(help::tutorial), webview, &menu, &position, &file, &folder, &titleBar));
+
   aboutButton.signal_clicked().connect(sigc::ptr_fun(about));
   window.signal_key_press_event().connect(sigc::bind(sigc::ptr_fun(on_key_pressed), webview, &titleBar), false);
 
