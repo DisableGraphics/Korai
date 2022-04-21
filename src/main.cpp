@@ -35,9 +35,7 @@
 #include "sigc++/functors/ptr_fun.h"
 #include "externalFunctions.h"
 #include "strnatcmp.hpp"
-
-/*
-*/
+#include "zipextract.hpp"
 
 //Position in the folder
 int position{-1};
@@ -101,10 +99,10 @@ std::string getFolder(std::string filename)
 //Decompresses the filename
 void decompress(std::string filename)
 {
-  std::string delete_command{"rm -rf " + (std::string)std::filesystem::current_path() + "/tmp/*"};
-  system(delete_command.c_str());
-  std::string command{"unzip -oqq \'" + filename + "\' -d \'" + (std::string)std::filesystem::current_path() + "/tmp/\'"};
-  system(command.c_str());
+  std::string tmp_folder{(std::string)std::filesystem::current_path() + "/tmp/"};
+  std::filesystem::remove_all(tmp_folder);
+  std::filesystem::create_directory(tmp_folder);
+  zipe::extract(filename, tmp_folder);
 }
 
 //Generates the page for a chapter
