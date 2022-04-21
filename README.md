@@ -33,7 +33,7 @@ Korai requires: <br>
 - Arch: `sudo pacman -S gtkmm3`<br>
 3. **WebKit2Gtk**
 - Ubuntu & Debian: `sudo apt install libwebkit2gtk-4.0-dev`
-- Arch: `sudo pacman -S webkit2gtk-4.0`
+- Arch: `sudo pacman -S webkit2gtk`
 4. **Libarchive**
 - Ubuntu & Debian: `sudo apt install libarchive-dev`
 - Arch: `sudo pacman -S libarchive` 
