@@ -36,6 +36,7 @@
 #include "externalFunctions.h"
 #include "strnatcmp.hpp"
 #include "zipextract.hpp"
+#include "comp.hpp"
 
 //Position in the folder
 int position{-1};
@@ -50,7 +51,7 @@ std::vector<std::string> getFilesInFolder(std::string folda)
   {
     if(!std::filesystem::is_directory(file.path()))
     {
-      if(file.path().extension() == ".cbz" || file.path().extension() == ".jpg" || file.path().extension() == ".png" || file.path().extension() == ".gif" || file.path().extension() == ".jfif" || file.path().extension() == ".webp" || file.path().extension() == ".jpeg" || file.path().extension() == ".svg")
+      if(comp::isImage(file.path()) || comp::isCompressed(file.path()))
       {
         toreturn.push_back(file.path());
       }
@@ -234,11 +235,22 @@ void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 //Opens a chapter and loads it into 'webview'. Changes 'titlebar's subtitle to the name of the manga and the chapter name
 void open(WebKitWebView * webview, Gtk::HeaderBar * titlebar)
 {
-  Gtk::FileChooserDialog o{"Select a cbz file"};
-  Glib::RefPtr<Gtk::FileFilter> filt = Gtk::FileFilter::create();
-  filt->set_name("CBZ archive");
-  filt->add_pattern("*.cbz");
-  o.set_filter(filt);
+  Glib::RefPtr<Gtk::FileFilter> supported_file_types = Gtk::FileFilter::create(); 
+  supported_file_types->set_name("All supported file types");
+  supported_file_types->add_pattern("*.cbz");
+  supported_file_types->add_pattern("*.cbr");
+  supported_file_types->add_pattern("*.zip");
+  supported_file_types->add_pattern("*.rar");
+  Gtk::FileChooserDialog o{"Select a manga/comic file"};
+  Glib::RefPtr<Gtk::FileFilter> cbz = Gtk::FileFilter::create();
+  cbz->set_name("CBZ archive");
+  cbz->add_pattern("*.cbz");
+  Glib::RefPtr<Gtk::FileFilter> cbr = Gtk::FileFilter::create();
+  cbr->set_name("CBR archive");
+  cbr->add_pattern("*.cbr");
+  o.add_filter(supported_file_types);
+  o.add_filter(cbz);
+  o.add_filter(cbr);
 
   o.set_action((Gtk::FileChooserAction)GTK_FILE_CHOOSER_ACTION_OPEN);
   o.add_button("Open", GTK_RESPONSE_ACCEPT);
