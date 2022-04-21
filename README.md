@@ -27,7 +27,7 @@ To make life easier, Korai supports some shortcuts:
 
 # Dependencies
 Korai requires: <br>
-1. **A compiler that supports C++17 (GCC > 5.0)**<br>
+1. **A compiler that supports C++17 (GCC > 5.0)** Only if compiling from source<br>
 2. **Gtkmm 3**
 - Ubuntu & Debian: `sudo apt install libgtkmm-3.0-dev`
 - Arch: `sudo pacman -S gtkmm3`<br>
