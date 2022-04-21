@@ -8,6 +8,10 @@ Next generation manga reader
 - **Reliable:** Works with manga/comic names that contain unusual characters and doesn't crash for no reason.
 - **Easy to use:** Everything is where it should be. No previous configuration required for almost anything.
 
+# File format support
+Korai supports:
+  - **CBZ/ZIP** files
+  - **CBR/RAR** files
 # Command line options
 For more information, please execute `korai -h`
 
@@ -30,9 +34,9 @@ Korai requires: <br>
 3. **WebKit2Gtk**
 - Ubuntu & Debian: `sudo apt install libwebkit2gtk-4.0-dev`
 - Arch: `sudo pacman -S webkit2gtk-4.0`
-4. **Unzip**
-- Ubuntu & Debian: `sudo apt install unzip`
-- Arch: `sudo pacman -S unzip` 
+4. **Libarchive**
+- Ubuntu & Debian: `sudo apt install libarchive-dev`
+- Arch: `sudo pacman -S libarchive` 
 
 # Building
 To build Korai, please enter the following commands:
@@ -45,7 +49,7 @@ The program will be in the `build/` directory
 
 # Troubleshooting
 1. The window is completely blank!
-- There's an issue surrounding WebKitGTK that can be traced to a faulty MIME types database (<a href= https://stackoverflow.com/questions/71734719/webkitgtk-doesnt-load-local-files>More information here</a>). To correct this, please open Korai and click the button named "Reload MIME types" (Under the menu button).
+- There's an issue surrounding WebKitGTK that can be traced to a faulty MIME types database (<a href=https://stackoverflow.com/questions/71734719/webkitgtk-doesnt-load-local-files>More information here</a>). To correct this, please open Korai and click the button named "Reload MIME types" (Under the menu button).
 
 2. Hey, a weird file named `index.html` and a folder named `tmp` have appeared!
 - These two files are crucial for the operation of Korai. Don't worry, when the program is closed, they will be deleted.
