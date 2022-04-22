@@ -41,7 +41,7 @@ Korai requires: <br>
 - Ubuntu & Debian: `sudo apt install libvte-2.91-dev`
 - Arch: `sudo pacman -S vte3`
 6. **mangodl** (Only if downloader support is enabled)
-- Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/latest>Please grab the latest release here</a> and put it on your PATH
+- Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH
 - Arch: `yay -S mangodl`
 
 # Building
