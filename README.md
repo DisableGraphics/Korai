@@ -37,6 +37,12 @@ Korai requires: <br>
 4. **Libarchive**
 - Ubuntu & Debian: `sudo apt install libarchive-dev`
 - Arch: `sudo pacman -S libarchive` 
+5. **VTE** (Only if downloader support is enabled)
+- Ubuntu & Debian: `sudo apt install libvte-2.91-dev`
+- Arch: `sudo pacman -S vte3`
+6. **mangodl** (Only if downloader support is enabled)
+- Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/latest>Please grab the latest release here</a> and put it on your PATH
+- Arch: `yay -S mangodl`
 
 # Building
 To build Korai, please enter the following commands:
@@ -45,7 +51,10 @@ git clone https://github.com/DisableGraphics/Korai
 cd Korai
 make
 ```
-The program will be in the `build/` directory
+Two applications will appear on the `build/` directory:
+- `korai-nodownload`: Korai without integrated downloader
+- `korai`: Korai with integrated downloader
+Note: Compilation of `korai` will fail if downloader support is not wanted. `korai-nodownload` will appear in the `build/` directory as the only executable.
 
 # Troubleshooting
 1. The window is completely blank!
