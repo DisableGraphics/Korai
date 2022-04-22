@@ -53,8 +53,8 @@ make
 ```
 Two applications will appear on the `build/` directory:
 - `korai-nodownload`: Korai without integrated downloader
-- `korai`: Korai with integrated downloader
-Note: Compilation of `korai` will fail if downloader support is not wanted. `korai-nodownload` will appear in the `build/` directory as the only executable.
+- `korai`: Korai with integrated downloader <br>
+**Note:** Compilation of `korai` will fail if downloader support is not wanted. `korai-nodownload` will appear in the `build/` directory as the only executable.
 
 # Troubleshooting
 1. The window is completely blank!
