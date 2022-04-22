@@ -4,10 +4,12 @@
 
 namespace comp
 {
+    inline std::vector<std::string> supportedImageExtensions{".png", ".jpeg", ".jpg", ".jfif", ".gif", ".webp", ".svg"};
+    inline std::vector<std::string> supportedCompressedExtensions{".cbz", ".cbr", ".rar", ".zip"};
     inline bool isImage(std::filesystem::path path)
     {
-        std::vector<std::string> supportedExtensions{".png", ".jpeg", ".jpg", ".jfif", ".gif", ".webp", ".svg"};
-        for (auto extension : supportedExtensions)
+        
+        for (auto extension : supportedImageExtensions)
         {
             if(path.extension() == extension)
             {
@@ -18,8 +20,8 @@ namespace comp
     }
     inline bool isCompressed(std::filesystem::path path)
     {
-        std::vector<std::string> supportedExtensions{".cbz", ".cbr", ".rar", ".zip"};
-        for (auto extension : supportedExtensions)
+        
+        for (auto extension : supportedCompressedExtensions)
         {
             if(path.extension() == extension)
             {

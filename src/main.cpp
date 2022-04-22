@@ -107,7 +107,19 @@ void decompress(std::string filename)
   std::string tmp_folder{(std::string)std::filesystem::current_path() + "/tmp/"};
   std::filesystem::remove_all(tmp_folder);
   std::filesystem::create_directory(tmp_folder);
-  zipe::extract(filename, tmp_folder);
+  if(comp::isCompressed(file))
+  {
+    zipe::extract(filename, tmp_folder);
+  }
+  else if(comp::isImage(file))
+  {
+    std::vector<std::string> filesInFolda{getFilesInFolder(folder)};
+    for(auto foyal : filesInFolda)
+    {
+      std::filesystem::copy(foyal, tmp_folder);
+    }
+  }
+  
 }
 
 //Generates the page for a chapter
@@ -245,6 +257,10 @@ void open(WebKitWebView * webview, Gtk::HeaderBar * titlebar)
   supported_file_types->add_pattern("*.cbr");
   supported_file_types->add_pattern("*.zip");
   supported_file_types->add_pattern("*.rar");
+  for(std::string ext : comp::supportedImageExtensions)
+  {
+    supported_file_types->add_pattern("*" + ext);
+  }
   Gtk::FileChooserDialog o{"Select a manga/comic file"};
   Glib::RefPtr<Gtk::FileFilter> cbz = Gtk::FileFilter::create();
   cbz->set_name("CBZ archive");
