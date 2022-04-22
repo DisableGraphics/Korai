@@ -449,6 +449,7 @@ bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::HeaderBar 
   }
   return false;
 }
+
 #ifdef DOWNLOAD
 
 static void
@@ -474,7 +475,7 @@ void download_manga()
   Gtk::Widget * terminal_widget = Glib::wrap( GTK_WIDGET( vteTerminal ) );
 
   gchar **envp = g_get_environ();
-  gchar *command[2] = {"/bin/bash"};
+  gchar *command[2] = {getenv("SHELL")};
 
    vte_terminal_spawn_async(VTE_TERMINAL(vteTerminal),
         VTE_PTY_DEFAULT,
