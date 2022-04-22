@@ -18,6 +18,7 @@
 #include "icon.xpm"
 #include <fstream>
 #include <filesystem>
+#include <string>
 #include <tuple>
 #include <webkit2/webkit2.h>
 #include <webkitdom/webkitdom.h>
@@ -47,6 +48,47 @@ int position{-1};
 //Variables to know different details
 std::string file{""}, folder{""}, saveFile;
 
+std::vector<std::string> getFoldersInFolder(std::string folda)
+{
+  std::vector<std::string> toreturn;
+  for (const auto & file : std::filesystem::recursive_directory_iterator(folda))
+  {
+    if(file.is_directory())
+    {
+      toreturn.push_back(file.path().string() + "/");
+    }
+  }
+  std::sort(toreturn.begin(), toreturn.end(), compareNat);
+  return toreturn;
+}
+
+std::string getMangaFolderForImages(std::string image_path)
+{
+  bool f{false};
+  int p{-1};
+  for(int i{static_cast<int>(image_path.size() -1)}; i >=0; i--)
+  {
+      if(image_path[i] == '/')
+      {
+        if(f)
+        {
+          p = i;
+          break;
+        }
+        else
+        {
+          f = true;
+        }
+      }
+  }
+  std::string r{""};
+  for(int i{0}; i <= p; i++)
+  {
+    r += image_path[i];
+  }
+  return r;
+}
+
 //Returns the files in a folder 'folda'
 std::vector<std::string> getFilesInFolder(std::string folda)
 {
@@ -73,6 +115,19 @@ int setPosition(std::string folda, std::string fayel)
   for(int i{0}; i < filesInFolda.size(); i++)
   {
     if(fayel == filesInFolda[i])
+    {
+      return i;
+    }
+  }
+  return -1;
+}
+
+int setImageFolderPosition(std::string upper_folder, std::string lower_folder)
+{
+  std::vector<std::string> foldersInFolder{getFoldersInFolder(upper_folder)};
+  for(int i{0}; i < foldersInFolder.size(); i++)
+  {
+    if(lower_folder == foldersInFolder[i])
     {
       return i;
     }
@@ -214,20 +269,43 @@ std::string getChapterName()
   return r;
 }
 
+std::string findFolderInFolder(int pos)
+{
+  std::vector<std::string> folders{getFoldersInFolder(getMangaFolderForImages(folder))};
+  return folders[pos];
+}
 //Goes to the next chapter and loads it into 'webView'. Changes 'titlebar's subtitle to the name of the manga and the chapter name
 void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
   if(position != -1){
-    std::vector<std::string> filesInFolder{getFilesInFolder(folder)};
-    position++;
-    if(position == filesInFolder.size())
-    {
-      position = 0;
+    if(comp::isCompressed(file)){
+      std::vector<std::string> filesInFolder{getFilesInFolder(folder)};
+      position++;
+      if(position == filesInFolder.size())
+      {
+        position = 0;
+      }
+      file = findFileInFolder(position);
+      open_chapter(webView);
+      titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
+      gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
-    file = findFileInFolder(position);
-    open_chapter(webView);
-    titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
-    gtk_widget_grab_focus(GTK_WIDGET(webView));
+    else if(comp::isImage(file))
+    {
+      std::string folders{getMangaFolderForImages(file)};
+      std::vector <std::string> foldersInFolder{getFoldersInFolder(folders)};
+      position++;
+      if(position == foldersInFolder.size())
+      {
+        position = 0;
+      }
+      folder = findFolderInFolder(position);
+      
+      file = findFileInFolder(0);
+      open_chapter(webView);
+      titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
+      gtk_widget_grab_focus(GTK_WIDGET(webView));
+    }
   }
 }
 
@@ -235,16 +313,34 @@ void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
   if(position != -1){
-    std::vector<std::string> filesInFolder{getFilesInFolder(folder)};
-    position--;
-    if(position < 0)
-    {
-      position = filesInFolder.size() -1;
+    if(comp::isCompressed(file)){
+      std::vector<std::string> filesInFolder{getFilesInFolder(folder)};
+      position--;
+      if(position < 0)
+      {
+        position = filesInFolder.size() -1;
+      }
+      file = findFileInFolder(position);
+      open_chapter(webView);
+      titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
+      gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
-    file = findFileInFolder(position);
-    open_chapter(webView);
-    titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
-    gtk_widget_grab_focus(GTK_WIDGET(webView));
+    else if(comp::isImage(file))
+    {
+      std::string folders{getMangaFolderForImages(file)};
+      std::vector <std::string> foldersInFolder{getFoldersInFolder(folders)};
+      position--;
+      if(position < 0)
+      {
+        position = foldersInFolder.size() - 1;
+      }
+      folder = findFolderInFolder(position);
+      
+      file = findFileInFolder(0);
+      open_chapter(webView);
+      titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
+      gtk_widget_grab_focus(GTK_WIDGET(webView));
+    }
   }
 }
 
@@ -253,10 +349,10 @@ void open(WebKitWebView * webview, Gtk::HeaderBar * titlebar)
 {
   Glib::RefPtr<Gtk::FileFilter> supported_file_types = Gtk::FileFilter::create(); 
   supported_file_types->set_name("All supported file types");
-  supported_file_types->add_pattern("*.cbz");
-  supported_file_types->add_pattern("*.cbr");
-  supported_file_types->add_pattern("*.zip");
-  supported_file_types->add_pattern("*.rar");
+  for(std::string ext : comp::supportedCompressedExtensions)
+  {
+    supported_file_types->add_pattern("*" + ext);
+  }
   for(std::string ext : comp::supportedImageExtensions)
   {
     supported_file_types->add_pattern("*" + ext);
@@ -326,15 +422,17 @@ void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk::Popove
   
     if(delete_dialog.run() == GTK_RESPONSE_ACCEPT)
     {
-      if(std::filesystem::exists(folder) && folder != "")
-      {
-        std::filesystem::remove_all(folder);
-        file = "";
-        folder = "";
-        position = -1;
-        headbar->set_subtitle("");
+      if(comp::isCompressed(file)){
+        if(std::filesystem::exists(folder) && folder != "")
+        {
+          std::filesystem::remove_all(folder);
+          file = "";
+          folder = "";
+          position = -1;
+          headbar->set_subtitle("");
 
-        load_homepage(webview);
+          load_homepage(webview);
+        }
       }
     }
   }
@@ -385,10 +483,21 @@ void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
     getline(chapter_file, file);
     if(std::filesystem::exists(file))
     {
-      folder = getFolder(file);
-      position = setPosition(folder,file);
-      open_chapter(webView);
-      titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
+      if(comp::isCompressed(file))
+      {
+        folder = getFolder(file);
+        position = setPosition(folder,file);
+        open_chapter(webView);
+        titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
+      }
+      else if(comp::isImage(file))
+      {
+        folder = getFolder(file);
+        position = setImageFolderPosition(getMangaFolderForImages(folder),folder);
+        file = getFilesInFolder(folder)[0];
+        open_chapter(webView);
+        titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
+      }
     }
   }
   chapter_file.close();
