@@ -13,6 +13,14 @@ Next generation manga reader
 Korai supports:
   - **CBZ/ZIP** files
   - **CBR/RAR** files
+  - **Folders with images inside**
+
+Korai supports these types of images:
+  - **PNG** files
+  - **JPG/JFIF/JPEG** files
+  - **GIF** files
+  - **WebP** files
+  - **SVG** files
 # Command line options
 For more information, please execute `korai -h`
 
