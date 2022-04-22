@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Apr 19 20:00:51 2022
+# Make data base, printed on Thu Apr 21 22:24:57 2022
 
 # Variables
 
@@ -21,15 +21,21 @@ CVSROOT = :pserver:anonymous@cvs.hercules-390.org:/usr/cvs/hercules
 # environment
 WTK_HOME = /opt/sun-wtk
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8be362d1-bd80-4742-aa17-c98ddd92e39c.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-6ca1f22a-50fd-437d-ad54-9adee7b96c72.sock
 # environment
 LC_NAME = es_ES.UTF-8
 # environment
 LC_NUMERIC = es_ES.UTF-8
 # environment
-VSCODE_CWD = /home/disablegraphics
+VSCODE_CWD = /home/disablegraphics/Projects/C++Projs/Korai
+# environment
+WINDOWID = 81820073
+# environment
+CAML_LD_LIBRARY_PATH = /home/disablegraphics/.opam/default/lib/stublibs:/usr/lib/ocaml/stublibs:/usr/lib/ocaml
 # environment
 LC_ADDRESS = es_ES.UTF-8
+# environment
+WASMER_DIR = /home/disablegraphics/.wasmer
 # default
 MAKE_COMMAND := make
 # environment
@@ -45,9 +51,13 @@ PWD = /home/disablegraphics/Projects/C++Projs/Korai
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
 MAIL = /var/spool/mail/disablegraphics
 # environment
 XDG_DATA_DIRS = /home/disablegraphics/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+# environment
+OLDPWD = /home/disablegraphics/Projects/C++Projs/Korai
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
@@ -68,6 +78,8 @@ XAUTHORITY = /home/disablegraphics/.Xauthority
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
+# environment
+PKG_CONFIG_PATH = /home/disablegraphics/.opam/default/lib/pkgconfig:
 # environment
 GTK_USE_PORTAL = 1
 # makefile
@@ -93,17 +105,23 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
+OCAML_TOPLEVEL_PATH = /home/disablegraphics/.opam/default/lib/toplevel
+# environment
+ZSH = /usr/share/oh-my-zsh/
+# environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 9804
+VSCODE_PID = 74069
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/HorchataBook:@/tmp/.ICE-unix/1153,unix/HorchataBook:/tmp/.ICE-unix/1153
+SESSION_MANAGER = local/HorchataBook:@/tmp/.ICE-unix/1170,unix/HorchataBook:/tmp/.ICE-unix/1170
 # automatic
 *F = $(notdir $*)
+# environment
+MANPATH = :/home/disablegraphics/.opam/default/man
 # environment
 QT_QPA_PLATFORMTHEME = qt5ct
 # environment
@@ -127,13 +145,13 @@ XMODIFIERS = @im=fcitx
 # environment
 DOTNET_BUNDLE_EXTRACT_BASE_DIR = /home/disablegraphics/.cache/dotnet_bundle_extract
 # environment
-SHLVL = 0
+SHLVL = 1
 # environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/home/disablegraphics/.dotnet/tools:/usr/lib/emscripten:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:/opt/sun-wtk/bin
+PATH = /home/disablegraphics/.wasmer/bin:/home/disablegraphics/.opam/default/bin:/home/disablegraphics/kde/src/kdesrc-build:/home/disablegraphics/bin:/home/disablegraphics/x-tools/arm-kindlepw2-linux-gnueabi/bin:/home/disablegraphics/bin/djgpp/bin:/home/disablegraphics/bin/waterfox:/opt/watcom/binl64:/home/disablegraphics/.local/share/gem/ruby/3.0.0/bin:/home/disablegraphics/bin/cross/bin:/home/disablegraphics/.cargo/bin:/home/disablegraphics/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/home/disablegraphics/.dotnet/tools:/usr/lib/emscripten:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:/opt/sun-wtk/bin:/home/disablegraphics/.wasmer/globals/wapm_packages/.bin
 # default
 MAKEFILES := 
 # environment
@@ -160,12 +178,20 @@ XDG_SEAT = seat0
 GTK_IM_MODULE = fcitx
 # environment
 XDG_CURRENT_DESKTOP = MATE
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:
 # automatic
 +F = $(notdir $+)
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
 # environment
+LESS = -R
+# environment
 DESKTOP_SESSION = mate
+# environment
+WATCOM = /opt/watcom/
+# environment
+WASMER_CACHE_DIR = /home/disablegraphics/.wasmer/cache
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = MATE
 # 'override' directive
@@ -173,11 +199,11 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = disablegraphics
 # environment
-GIO_LAUNCHED_DESKTOP_FILE = /home/disablegraphics/Escritorio/code-oss.desktop
-# environment
 XDG_VTNR = 7
 # makefile
 .DEFAULT_GOAL := all
+# environment
+HISTCONTROL = ignoreboth:erasedups
 # environment
 EDITOR = nano
 # environment
@@ -191,9 +217,11 @@ MAKE_VERSION := 4.3
 # environment
 QT_FONT_DPI = 96
 # environment
+OPAM_SWITCH_PREFIX = /home/disablegraphics/.opam/default
+# environment
 LC_MEASUREMENT = es_ES.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 9791
+PAGER = less
 # environment
 _ = /usr/bin/make
 # environment
@@ -201,7 +229,13 @@ LC_PAPER = es_ES.UTF-8
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
+COLORTERM = truecolor
+# environment
 GTK_OVERLAY_SCROLLING = 0
+# environment
+VISUAL = nano
+# environment
+LFS = /mnt/lfs
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -214,6 +248,8 @@ QT_IM_MODULE = fcitx
 ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-bced12ff-1.66.0-main.sock
+# environment
+TERM = xterm-256color
 # environment
 HG = /usr/bin/hg
 # environment
@@ -229,6 +265,8 @@ VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
+VTE_VERSION = 6800
+# environment
 XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/disablegraphics
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
@@ -241,7 +279,7 @@ GDMSESSION = mate
 # environment
 LC_IDENTIFICATION = es_ES.UTF-8
 # variable set hash-table stats:
-# Load=115/1024=11%, Rehash=0, Collisions=7/148=5%
+# Load=134/1024=13%, Rehash=0, Collisions=15/167=9%
 
 # Pattern-specific Variable Values
 
@@ -262,7 +300,7 @@ LC_IDENTIFICATION = es_ES.UTF-8
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-15 22:29:13.443880282
+#  Last modified 2022-04-21 13:28:43.174902728
 #  File has been updated.
 #  Successfully updated.
 
@@ -277,7 +315,6 @@ all:
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
 #  File does not exist.
- 
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -299,7 +336,7 @@ all:
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'Makefile', line 2):
-	mkdir build & g++ src/main.cpp `pkg-config gtkmm-3.0 --libs --cflags` `pkg-config webkit2gtk-4.0 --libs --cflags` -std=c++17 -o build/korai
+	mkdir build & g++ src/main.cpp `pkg-config gtkmm-3.0 --libs --cflags` `pkg-config webkit2gtk-4.0 --libs --cflags` -larchive -O3 -std=c++17 -o build/korai
 
 # Not a target:
 .SUFFIXES:
@@ -321,6 +358,6 @@ all:
 # strcache performance: lookups = 25 / hit rate = 28%
 # hash-table stats:
 # Load=18/8192=0%, Rehash=0, Collisions=0/25=0%
-# Finished Make data base on Tue Apr 19 20:00:51 2022
+# Finished Make data base on Thu Apr 21 22:24:57 2022
 
  

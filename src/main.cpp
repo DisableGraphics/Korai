@@ -38,6 +38,10 @@
 #include "zipextract.hpp"
 #include "comp.hpp"
 
+#ifdef DOWNLOAD
+#include <vte-2.91/vte/vte.h>
+#endif
+
 //Position in the folder
 int position{-1};
 //Variables to know different details
@@ -445,7 +449,74 @@ bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::HeaderBar 
   }
   return false;
 }
+#ifdef DOWNLOAD
 
+static void
+execute_order_66(VteTerminal *terminal, GPid pid, GError *error, gpointer user_data)
+{
+    if (!terminal) return;
+    if (pid == -1) gtk_main_quit();
+}
+
+void runCommandOnTerminal(GtkWidget * terminal, Gtk::Entry * e)
+{
+  std::string toRun{"mangodl -D "};
+  toRun += e->get_text();
+  toRun += "\n";
+  vte_terminal_feed_child(VTE_TERMINAL(terminal), toRun.c_str(), -1);
+}
+
+void download_manga()
+{
+  Gtk::Dialog d{"Download"};
+  Gtk::Entry e;
+  GtkWidget * vteTerminal = vte_terminal_new();
+  Gtk::Widget * terminal_widget = Glib::wrap( GTK_WIDGET( vteTerminal ) );
+
+  gchar **envp = g_get_environ();
+  gchar *command[2] = {"/bin/bash"};
+
+   vte_terminal_spawn_async(VTE_TERMINAL(vteTerminal),
+        VTE_PTY_DEFAULT,
+        NULL,         /* working directory  */
+        //command,      /* command */
+        command,
+        NULL,         /* environment */
+        G_SPAWN_DEFAULT,            /* spawn flags */
+        NULL, NULL,   /* child setup */
+        NULL,         /* child pid */
+        -1,           /* timeout */
+        NULL,         /* cancellable */
+        execute_order_66,  /* callback */
+        NULL);        /* user_data */
+   
+
+  g_strfreev(envp);
+
+  e.set_placeholder_text("Manga title");
+
+  Gtk::Box * box = d.get_content_area();
+  box->pack_start(e);
+
+  e.signal_activate().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e));
+
+  Gtk::Button b_ok {"OK"};
+  box->pack_start(b_ok);
+  b_ok.signal_clicked().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e)); 
+  Gtk::Button * b_cancel = d.add_button("Cancel", GTK_RESPONSE_CANCEL);
+
+  box->pack_start(*terminal_widget); 
+
+  d.show_all();
+  
+  switch(d.run())
+  {
+    case GTK_RESPONSE_CANCEL:
+      d.hide();
+      break;
+  }
+}
+#endif
 int main( int argc, char **argv)
 {
   //Bunch of bools used for some things
@@ -484,11 +555,10 @@ int main( int argc, char **argv)
   Gtk::ModelButton deleteButton, closeButton;
   Gtk::ModelButton reloadMIMEbutton;
   Gtk::ModelButton aboutButton, tutorialButton;
-  deleteButton.set_relief(Gtk::RELIEF_NONE);
-  closeButton.set_relief(Gtk::RELIEF_NONE);
-  reloadMIMEbutton.set_relief(Gtk::RELIEF_NONE);
-  aboutButton.set_relief(Gtk::RELIEF_NONE);
-  tutorialButton.set_relief(Gtk::RELIEF_NONE);
+  #ifdef DOWNLOAD
+  Gtk::ModelButton downloadButton;
+  #endif
+  
   Gtk::VBox menuBox;
   Gtk::Separator sep1, sepabout, sep2;
 
@@ -498,6 +568,9 @@ int main( int argc, char **argv)
   menuBox.pack_start(reloadMIMEbutton);
   menuBox.pack_start(sep2);
   menuBox.pack_start(tutorialButton);
+  #ifdef DOWNLOAD
+  menuBox.pack_start(downloadButton);
+  #endif 
 
   menuBox.pack_end(aboutButton); //This button must be at the end
   menuBox.pack_end(sepabout); //Preceeded by a separator
@@ -519,6 +592,9 @@ int main( int argc, char **argv)
   reloadMIMEbutton.set_label("Reload MIME types");
   aboutButton.set_label("About");
   tutorialButton.set_label("Tutorial");
+  #ifdef DOWNLOAD
+  downloadButton.set_label("Download manga");
+  #endif
   
   buttonsBox.pack_start(previousButton);
   buttonsBox.pack_start(openButton);
@@ -576,6 +652,9 @@ int main( int argc, char **argv)
   closeButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(close_manga), webview, &titleBar, &menu));
   reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), webview));
   tutorialButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(help::tutorial), webview, &menu, &position, &file, &folder, &titleBar));
+  #ifdef DOWNLOAD
+  downloadButton.signal_clicked().connect(sigc::ptr_fun(download_manga));
+  #endif
 
   aboutButton.signal_clicked().connect(sigc::ptr_fun(about));
   window.signal_key_press_event().connect(sigc::bind(sigc::ptr_fun(on_key_pressed), webview, &titleBar), false);
