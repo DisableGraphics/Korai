@@ -582,7 +582,6 @@ execute_order_66(VteTerminal *terminal, GPid pid, GError *error, gpointer user_d
 {
     if (!terminal) return;
     if (pid == -1) gtk_main_quit();
-    /*I'm not using this function to run the command for type safety reasons (user_data is behaving weirdly)*/
 }
 
 void runCommandOnTerminal(GtkWidget * terminal, Gtk::Entry * e)
