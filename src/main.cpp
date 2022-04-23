@@ -790,4 +790,3 @@ int main( int argc, char **argv)
   app->run( window );
   exit( 0 );
 }
-
