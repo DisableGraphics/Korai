@@ -71,8 +71,7 @@ namespace zipe
             if (r < ARCHIVE_WARN)
                 exit(1);
 
-            const char* currentFile = archive_entry_pathname(entry);
-            const std::string fullOutputPath = folder + currentFile;
+            const std::string fullOutputPath = folder + archive_entry_pathname(entry);
             archive_entry_set_pathname(entry, fullOutputPath.c_str());
             r = archive_write_header(ext, entry);
             if (r < ARCHIVE_OK)
