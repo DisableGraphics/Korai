@@ -605,8 +605,7 @@ void download_manga()
    vte_terminal_spawn_async(VTE_TERMINAL(vteTerminal),
         VTE_PTY_DEFAULT,
         NULL,         /* working directory  */
-        //command,      /* command */
-        command,
+        command,      /* command */
         NULL,         /* environment */
         G_SPAWN_DEFAULT,            /* spawn flags */
         NULL, NULL,   /* child setup */
