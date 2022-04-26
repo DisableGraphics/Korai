@@ -1,20 +1,7 @@
-#include "gdkmm/pixbuf.h"
-#include "gdkmm/rgba.h"
-#include "glibmm/refptr.h"
-#include "gtkmm/aboutdialog.h"
-#include "gtkmm/accelgroup.h"
-#include "gtkmm/box.h"
-#include "gtkmm/dialog.h"
-#include "gtkmm/enums.h"
-#include "gtkmm/filechooser.h"
-#include "gtkmm/filechooserdialog.h"
-#include "gtkmm/filefilter.h"
-#include "gtkmm/headerbar.h"
 #include <chrono>
 #include <cstdlib>
 #include <gtkmm.h>
 #include <iostream>
-#include "gtkmm/separator.h"
 #include "icon.xpm"
 #include <fstream>
 #include <filesystem>
@@ -22,18 +9,9 @@
 #include <tuple>
 #include <webkit2/webkit2.h>
 #include <webkitdom/webkitdom.h>
-#include "gtkmm/image.h"
-#include "gtkmm/label.h"
-#include "gtkmm/menu.h"
-#include "gtkmm/menubutton.h"
-#include "gtkmm/menuitem.h"
-#include "gtkmm/modelbutton.h"
-#include "gtkmm/popover.h"
-#include "gtkmm/scrolledwindow.h"
 #include "help.h"
 #include "web_contents.h"
 #include "args.h"
-#include "sigc++/functors/ptr_fun.h"
 #include "externalFunctions.h"
 #include "strnatcmp.hpp"
 #include "zipextract.hpp"
@@ -531,6 +509,7 @@ void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
 //Executed when the user clicks on the "about" button
 void about()
 {
+  //Pretty much miscellaneous things
   Gtk::AboutDialog dialog;
   Gtk::Box * box = dialog.get_content_area();
   dialog.set_authors({"DisableGraphics"});
@@ -541,6 +520,7 @@ void about()
   dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
   dialog.set_copyright("Made by DisableGraphics");
   Gtk::Label label;
+  //It's funny that the longest line on this method is the link to my Patreon
   label.set_markup("<a href ='https://www.patreon.com/DisableGraphics' title =''>Donate</a>");
   box->pack_start(label);
   dialog.show_all();
@@ -548,11 +528,11 @@ void about()
   but->hide();
   dialog.run();
 }
-
+//Pretty self-explanatory
 void open_mangadex(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
   webkit_web_view_load_uri(webView, "https://mangadex.org");
-  position = -2;
+  position = -2; //Needs to be different from -1. 
   file = "";
   folder = "";
   titleBar->set_subtitle("MangaDex");
@@ -773,7 +753,7 @@ int main( int argc, char **argv)
 
   if(fullscreen)
   {
-    window.maximize();
+    window.maximize(); //Will maximize the window. Pretty self-explanatory
   }
 
   Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
@@ -796,7 +776,8 @@ int main( int argc, char **argv)
 
   if(tutorial)
   {
-     help::tutorial(webview, &menu, &position, &file, &folder, &titleBar);
+    //Yes, I need these absolute f*ckton of arguments. And there's no argument copied by value. (One pointer and 5 references)
+    help::tutorial(webview, &menu, &position, &file, &folder, &titleBar);
   }
   else
   {
@@ -807,6 +788,8 @@ int main( int argc, char **argv)
   window.show_all();
   
   webkit_web_view_reload(webview);
+
+  //These all the goddamn buttons. Man, not using Glade didn't pay off...
   openButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open), webview, &titleBar));
   nextButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(next_chapter), webview, &titleBar));
   previousButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(previous_chapter), webview, &titleBar));

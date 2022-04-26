@@ -1,4 +1,5 @@
 /* XPM */
+/*I must thank XPM, because otherwise Korai would be written in C to github*/
 static const char *icon[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 227 2 ",
