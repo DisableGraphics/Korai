@@ -411,6 +411,7 @@ void load_homepage(WebKitWebView * webview)
 void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk::Popover * menu)
 {
   if(position != -1){
+    
     Gtk::Dialog delete_dialog {"Are you sure?"};
     Gtk::Box * box = delete_dialog.get_content_area();
 
@@ -442,8 +443,22 @@ void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk::Popove
           load_homepage(webview);
         }
       }
+      else if(comp::isImage(file))
+      {
+        if(std::filesystem::exists(getMangaFolderForImages(file)) && getMangaFolderForImages(file) != "")
+        {
+          std::filesystem::remove_all(getMangaFolderForImages(file));
+          file = "";
+          folder = "";
+          position = -1;
+          headbar->set_subtitle("");
+
+          load_homepage(webview);
+        }
+      }
     }
   }
+    
   menu->hide();
 }
 
