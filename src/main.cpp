@@ -277,7 +277,7 @@ std::string findFolderInFolder(int pos)
 //Goes to the next chapter and loads it into 'webView'. Changes 'titlebar's subtitle to the name of the manga and the chapter name
 void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
-  if(position != -1){
+  if(position > -1){
     if(comp::isCompressed(file)){
       std::vector<std::string> filesInFolder{getFilesInFolder(folder)};
       position++;
@@ -307,12 +307,16 @@ void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
   }
+  else if(position == -2)
+  {
+    webkit_web_view_go_forward(webView);
+  }
 }
 
 //Goes to the previous chapter and loads it into 'webView'. Changes 'titlebar's subtitle to the name of the manga and the chapter name
 void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
-  if(position != -1){
+  if(position > -1){
     if(comp::isCompressed(file)){
       std::vector<std::string> filesInFolder{getFilesInFolder(folder)};
       position--;
@@ -341,6 +345,10 @@ void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
+  } 
+  else if (position == -2)
+  {
+    webkit_web_view_go_back(webView);
   }
 }
 
@@ -526,6 +534,15 @@ void about()
   dialog.run();
 }
 
+void open_mangadex(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
+{
+  webkit_web_view_load_uri(webView, "https://mangadex.org");
+  position = -2;
+  file = "";
+  folder = "";
+  titleBar->set_subtitle("MangaDex");
+}
+
 //Reloads the MIME database, which has been failing in recent versions of WebKitGTK
 void reloadMIME(WebKitWebView * webView)
 {
@@ -680,6 +697,7 @@ int main( int argc, char **argv)
   Gtk::ModelButton deleteButton, closeButton;
   Gtk::ModelButton reloadMIMEbutton;
   Gtk::ModelButton aboutButton, tutorialButton;
+  Gtk::ModelButton mangadexButton;
   #ifdef DOWNLOAD
   Gtk::ModelButton downloadButton;
   #endif
@@ -693,6 +711,7 @@ int main( int argc, char **argv)
   menuBox.pack_start(reloadMIMEbutton);
   menuBox.pack_start(sep2);
   menuBox.pack_start(tutorialButton);
+  menuBox.pack_start(mangadexButton);
   #ifdef DOWNLOAD
   menuBox.pack_start(downloadButton);
   #endif 
@@ -717,6 +736,7 @@ int main( int argc, char **argv)
   reloadMIMEbutton.set_label("Reload MIME types");
   aboutButton.set_label("About");
   tutorialButton.set_label("Tutorial");
+  mangadexButton.set_label("MangaDex");
   #ifdef DOWNLOAD
   downloadButton.set_label("Download manga");
   #endif
@@ -776,6 +796,7 @@ int main( int argc, char **argv)
   deleteButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(delete_manga), webview, &titleBar, &menu));
   closeButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(close_manga), webview, &titleBar, &menu));
   reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), webview));
+  mangadexButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open_mangadex), webview, &titleBar));
   tutorialButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(help::tutorial), webview, &menu, &position, &file, &folder, &titleBar));
   #ifdef DOWNLOAD
   downloadButton.signal_clicked().connect(sigc::ptr_fun(download_manga));
