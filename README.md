@@ -14,6 +14,7 @@ Korai supports:
   - **CBZ/ZIP** files
   - **CBR/RAR** files
   - **Folders with images inside**
+  - **MangaDex**: As Korai uses WebKitGTK, a browser engine, it can load manga web pages
 
 Korai supports these types of images:
   - **PNG** files
