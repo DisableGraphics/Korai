@@ -445,9 +445,9 @@ void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk::Popove
       }
       else if(comp::isImage(file))
       {
-        if(std::filesystem::exists(getMangaFolderForImages(file)) && getMangaFolderForImages(file) != "")
+        if(std::filesystem::exists(folder) && folder != "")
         {
-          std::filesystem::remove_all(getMangaFolderForImages(file));
+          std::filesystem::remove_all(folder);
           file = "";
           folder = "";
           position = -1;
