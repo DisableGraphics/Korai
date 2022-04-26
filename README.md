@@ -2,6 +2,7 @@
 Next generation manga reader
 
 ![Korai](https://user-images.githubusercontent.com/48135147/163577957-b9fdc19d-827a-40d3-8cfc-e0f36930a505.png)
+Note: screenshot is old and probably doesn't show all the features in Korai
 
 # Features
 - **Fast:** Despite using WebKitGtk, a port of an _entire_ browser engine to GTK, Korai is incredibly fast loading chapters.
@@ -14,7 +15,7 @@ Korai supports:
   - **CBZ/ZIP** files
   - **CBR/RAR** files
   - **Folders with images inside**
-  - **MangaDex**: As Korai uses WebKitGTK, a browser engine, it can load manga web pages
+  - **MangaDex**: As Korai uses WebKitGTK, a browser engine, it can load manga web pages. Use the next chapter/previous chapter buttons to go back and forward.
 
 Korai supports these types of images:
   - **PNG** files
