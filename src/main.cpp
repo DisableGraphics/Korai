@@ -600,8 +600,10 @@ bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::HeaderBar 
     case 113: //Left arrow
       previous_chapter(webView, titleBar);
       break;
-    case 32 & 37: //'Ctrl + o' key
-      open(webView, titleBar);
+    case 32: //'o' key
+      if(position > -2){
+        open(webView, titleBar);
+      }
       break;
   }
   return false;
