@@ -32,7 +32,7 @@ For more information, please execute `korai -h`
 
 # Shortcuts
 To make life easier, Korai supports some shortcuts:
-- Pressing 'Ctrl + o' will will open a dialog to open a file
+- Pressing 'o' will will open a dialog to open a file
 - Pressing left arrow will change to the previous chapter
 - Pressing right arrow will change to the next chapter 
 
