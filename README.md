@@ -77,3 +77,5 @@ Two applications will appear on the `build/` directory:
 - This file is where Korai saves the last chapter the user was reading. Its path can be changed using the `korai -f /path/to/save_file.conf` command
 4. Hey, there's no Windows version!
 - WebKitGtk doesn't support Windows and so does Korai
+5. Why did you name the releases after heavy metal/hard rock songs?
+- Why not
