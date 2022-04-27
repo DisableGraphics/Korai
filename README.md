@@ -47,6 +47,10 @@ sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev libvte-2.
 ```
 yay -S korai
 ```
+Although you can still build Korai from source:
+```
+sudo pacman -S gtkmm3 webkit2gtk libarchive vte3
+```
 
 **If the integrated downloader is wanted:**
 - Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH
