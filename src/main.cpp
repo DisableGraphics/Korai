@@ -675,7 +675,7 @@ int main( int argc, char **argv)
 
   std::string currentFolder{std::filesystem::current_path()};
   saveFile = (std::string)std::filesystem::current_path() + "/chapter.conf";
-  args::vector2d defsize{1, 1};
+  args::vector2d defsize{-1, -1}; //Some guy will come saying that he likes using korai at 1x1 dimensions...
   
 
   
@@ -764,7 +764,7 @@ int main( int argc, char **argv)
   webkit_settings_set_enable_javascript(settings, TRUE);
   
   Gtk::Window window;
-  if(defsize.x == 1 && defsize.y == 1)
+  if(defsize.x == -1 && defsize.y == -1)
   {
     Glib::RefPtr<Gdk::Screen> s = window.get_screen();
     defsize.x = (double)(s->get_width() * 0.3925);
