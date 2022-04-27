@@ -38,20 +38,13 @@ To make life easier, Korai supports some shortcuts:
 
 # Dependencies
 Korai requires: <br>
-1. **A compiler that supports C++17 (GCC > 5.0)** Only if compiling from source<br>
-2. **Gtkmm 3**
-- Ubuntu & Debian: `sudo apt install libgtkmm-3.0-dev`
-- Arch: `sudo pacman -S gtkmm3`<br>
-3. **WebKit2Gtk**
-- Ubuntu & Debian: `sudo apt install libwebkit2gtk-4.0-dev`
-- Arch: `sudo pacman -S webkit2gtk`
-4. **Libarchive**
-- Ubuntu & Debian: `sudo apt install libarchive-dev`
-- Arch: `sudo pacman -S libarchive` 
-5. **VTE** (Only if downloader support is enabled)
-- Ubuntu & Debian: `sudo apt install libvte-2.91-dev`
-- Arch: `sudo pacman -S vte3`
-6. **mangodl** (Only if downloader support is enabled)
+
+- Ubuntu & Debian: `sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev libvte-2.91-dev` 
+- Arch: You can build it from source or get it from the aur
+- AUR: `yay -S korai`
+- If compiling from source: `sudo pacman -S gtkmm3 webkit2gtk libarchive vte3`
+
+**If the integrated downloader is wanted:**
 - Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH
 - Arch: `yay -S mangodl`
 
