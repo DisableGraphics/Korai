@@ -50,7 +50,7 @@ yay -S korai
 
 **If the integrated downloader is wanted:**
 - Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH
-- Arch: `yay -S mangodl`
+- Arch: Automatically downloaded using the AUR
 
 # Building
 To build Korai, please enter the following commands:
