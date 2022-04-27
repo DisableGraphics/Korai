@@ -1,7 +1,7 @@
 #include <iostream>
 #include <filesystem>
 #include <vector>
-
+//Compares if the file is from a supported extension
 namespace comp
 {
     inline std::vector<std::string> supportedImageExtensions{".png", ".jpeg", ".jpg", ".jfif", ".gif", ".webp", ".svg"};
