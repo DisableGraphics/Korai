@@ -54,7 +54,7 @@ sudo pacman -S gtkmm3 webkit2gtk libarchive vte3
 
 **If the integrated downloader is wanted:**
 - Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH
-- Arch: Automatically downloaded using the AUR
+- Arch: Automatically downloaded using the AUR (If you want to build Korai from source: `yay -S mangodl`)
 
 # Building
 To build Korai, please enter the following commands:
