@@ -1,7 +1,13 @@
 #include <chrono>
+#include <cstddef>
 #include <cstdlib>
 #include <gtkmm.h>
 #include <iostream>
+#include "gdkmm/display.h"
+#include "gdkmm/monitor.h"
+#include "gdkmm/rectangle.h"
+#include "gdkmm/screen.h"
+#include "glibmm/refptr.h"
 #include "icon.xpm"
 #include <fstream>
 #include <filesystem>
@@ -669,8 +675,13 @@ int main( int argc, char **argv)
 
   std::string currentFolder{std::filesystem::current_path()};
   saveFile = (std::string)std::filesystem::current_path() + "/chapter.conf";
-  //Default size. I find 628x650 very comfortable.
-  args::vector2d defsize{628, 650};
+  args::vector2d defsize{1, 1};
+  
+
+  
+  
+  //Default size. I find this weird dimensions to be very comfortable
+  
   //Looks at the args
   if(argc >= 2)
   {
@@ -688,6 +699,9 @@ int main( int argc, char **argv)
   Gtk::Popover menu;
   titleBar.pack_start(buttonsBox);
   Gtk::MenuButton menubutton;
+
+ 
+
   
   menubutton.set_image_from_icon_name("open-menu-symbolic");
   Gtk::Button nextButton, previousButton, openButton;
@@ -748,9 +762,16 @@ int main( int argc, char **argv)
   webkit_settings_set_allow_universal_access_from_file_urls(settings, TRUE);
   webkit_settings_set_auto_load_images(settings, TRUE);
   webkit_settings_set_enable_javascript(settings, TRUE);
+  
   Gtk::Window window;
+  if(defsize.x == 1 && defsize.y == 1)
+  {
+    Glib::RefPtr<Gdk::Screen> s = window.get_screen();
+    defsize.x = (double)(s->get_width() * 0.3925);
+    defsize.y = (double)(s->get_height() * 0.722222222);
+  }
+  
   window.set_default_size( defsize.x, defsize.y );
-
   if(fullscreen)
   {
     window.maximize(); //Will maximize the window. Pretty self-explanatory
