@@ -770,6 +770,12 @@ int main( int argc, char **argv)
     defsize.x = (double)(s->get_width() * 0.3925);
     defsize.y = (double)(s->get_height() * 0.722222222);
   }
+  else if(defsize.x > window.get_screen()->get_width() || defsize.y > window.get_screen()->get_height())
+  {
+    std::cout << " \t\t\t[ERROR] Hey hey! [ERROR]\n You're trying to open a window bigger than your computer screen!\n";
+    std::cout << " Your screen dimensions are: " << window.get_screen()->get_width() << "x" << window.get_screen()->get_height() << "\n";
+    return EXIT_FAILURE;
+  }
   
   window.set_default_size( defsize.x, defsize.y );
   if(fullscreen)
