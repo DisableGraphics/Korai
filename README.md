@@ -62,10 +62,13 @@ git clone https://github.com/DisableGraphics/Korai
 cd Korai
 make
 ```
-Two applications will appear on the `build/` directory:
-- `korai-nodownload`: Korai without integrated downloader
-- `korai`: Korai with integrated downloader <br>
-**Note:** Compilation of `korai` will fail if downloader support is not wanted. `korai-nodownload` will appear in the `build/` directory as the only executable.
+**Note:** If the integrated downloader is not wanted, then write:
+```
+git clone https://github.com/DisableGraphics/Korai
+cd Korai
+make korai-nodownload
+```
+instead
 
 # Troubleshooting
 1. The window is completely blank!
