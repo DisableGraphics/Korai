@@ -47,7 +47,7 @@ sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev libvte-2.
 ```
 yay -S korai
 ```
-**Note:** The default chapter file path is `/home/$USER/.local/share/chapter.conf` if korai has been installed using this method <br>
+**Note:** The default chapter file path is `/home/$USER/.local/share/chapter.conf` if korai has been installed using this method. <br> <br> 
 Although you can still build Korai from source:
 ```
 sudo pacman -S gtkmm3 webkit2gtk libarchive vte3
@@ -64,7 +64,7 @@ git clone https://github.com/DisableGraphics/Korai
 cd Korai
 make
 ```
-**Note:** If the integrated downloader is not wanted, then write:
+**Note:** If the integrated downloader is not wanted, then execute:
 ```
 git clone https://github.com/DisableGraphics/Korai
 cd Korai
