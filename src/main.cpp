@@ -32,6 +32,15 @@ int position{-1};
 //Variables to know different details
 std::string file{""}, folder{""}, saveFile;
 
+void save()
+{
+  std::ofstream chapter_file;
+  chapter_file.open(saveFile);
+
+  chapter_file << file;
+  chapter_file.close();
+}
+
 std::vector<std::string> getFoldersInFolder(std::string folda)
 {
   std::vector<std::string> toreturn;
@@ -290,6 +299,7 @@ void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
+    save();
   }
   else if(position == -2)
   {
@@ -329,6 +339,7 @@ void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
+    save();
   } 
   else if (position == -2)
   {
@@ -373,6 +384,7 @@ void open(WebKitWebView * webview, Gtk::HeaderBar * titlebar)
       open_chapter(webview);
       titlebar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webview));
+      save();
       break;
   }
 }
@@ -440,7 +452,8 @@ void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk::Popove
           load_homepage(webview);
         }
       }
-    }
+      save();
+    } 
   }
     
   menu->hide();
@@ -454,6 +467,8 @@ void close_manga(WebKitWebView * webView, Gtk::HeaderBar * headbar, Gtk::Popover
   position = -1;
   headbar->set_subtitle("");
 
+  save();
+
   load_homepage(webView);
   menu->hide();
 }
@@ -462,11 +477,7 @@ void close_manga(WebKitWebView * webView, Gtk::HeaderBar * headbar, Gtk::Popover
 bool on_close(GdkEventAny* event, Glib::RefPtr<Gtk::Application> app)
 {
   //Saves the chapter in chapter_file
-  std::ofstream chapter_file;
-  chapter_file.open(saveFile);
-
-  chapter_file << file;
-  chapter_file.close();
+  save();
 
   //Deletes unnecesary folders and files
   std::filesystem::remove_all((std::string)std::filesystem::current_path() + "/tmp/");
