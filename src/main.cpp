@@ -22,6 +22,7 @@
 #include "strnatcmp.hpp"
 #include "zipextract.hpp"
 #include "comp.hpp"
+#include <thread>
 
 #ifdef DOWNLOAD
 #include <vte-2.91/vte/vte.h>
@@ -299,7 +300,8 @@ void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
-    save();
+    std::thread t(save);
+    t.detach();
   }
   else if(position == -2)
   {
@@ -339,7 +341,8 @@ void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
-    save();
+    std::thread t(save);
+    t.detach();
   } 
   else if (position == -2)
   {
@@ -384,7 +387,8 @@ void open(WebKitWebView * webview, Gtk::HeaderBar * titlebar)
       open_chapter(webview);
       titlebar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webview));
-      save();
+      std::thread t(save);
+      t.detach();
       break;
   }
 }
@@ -452,7 +456,8 @@ void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk::Popove
           load_homepage(webview);
         }
       }
-      save();
+      std::thread t(save);
+      t.detach();
     } 
   }
     
@@ -467,7 +472,8 @@ void close_manga(WebKitWebView * webView, Gtk::HeaderBar * headbar, Gtk::Popover
   position = -1;
   headbar->set_subtitle("");
 
-  save();
+  std::thread t(save);
+  t.detach();
 
   load_homepage(webView);
   menu->hide();
