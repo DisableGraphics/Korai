@@ -820,7 +820,7 @@ int main( int argc, char **argv)
 
   if(tutorial)
   {
-    //Yes, I need these absolute f*ckton of arguments. And there's no argument copied by value. (One pointer and 5 references)
+    //Yes, I need these absolute f*ckton of arguments. And there's no argument copied by value. (All of them are pointers)
     help::tutorial(webview, &menu, &position, &file, &folder, &titleBar);
   }
   else
