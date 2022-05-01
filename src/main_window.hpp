@@ -163,6 +163,8 @@ class MainWindow : public Gtk::Window
         //When korai is opened, this is executed
         void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
         {
+            //Creates the 'tmp' directory
+            std::filesystem::create_directory(((std::string)std::filesystem::current_path() + "/tmp/"));
             //Loads the chapter file
             std::ifstream chapter_file;
             chapter_file.open(saveFile);
@@ -171,6 +173,7 @@ class MainWindow : public Gtk::Window
                 getline(chapter_file, file);
                 if(std::filesystem::exists(file))
                 {
+                    std::cout << "exists\n";
                     if(comp::isCompressed(file))
                     {
                         folder = getFolder(file);
@@ -180,6 +183,7 @@ class MainWindow : public Gtk::Window
                     }
                     else if(comp::isImage(file))
                     {
+                        std::cout << "Is image\n";
                         folder = getFolder(file);
                         position = setImageFolderPosition(getMangaFolderForImages(folder),folder);
                         file = getFilesInFolder(folder)[0];
@@ -189,7 +193,6 @@ class MainWindow : public Gtk::Window
                 }
             }
             chapter_file.close();
-            //Creates the 'tmp' directory
-            std::filesystem::create_directory(((std::string)std::filesystem::current_path() + "/tmp/"));
+            
         }
 };
