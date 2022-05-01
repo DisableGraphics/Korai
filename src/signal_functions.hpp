@@ -285,10 +285,16 @@ inline bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::Hea
   switch(event->hardware_keycode)
   {
     case 114: //Right arrow
-      next_chapter(webView, titleBar);
+      if(position > -2)
+      {
+        next_chapter(webView, titleBar);
+      }
       break;
     case 113: //Left arrow
-      previous_chapter(webView, titleBar);
+      if(position > -2)
+      {
+        previous_chapter(webView, titleBar);
+      }
       break;
     case 32: //'o' key
       if(position > -2){
