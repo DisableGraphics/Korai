@@ -1,3 +1,4 @@
+#pragma once
 /* XPM */
 /*I must thank XPM, because otherwise Korai would be written in C to github*/
 static const char *icon[] = {
