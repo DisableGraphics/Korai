@@ -4,6 +4,7 @@
 #include "functions.hpp"
 #include <thread>
 #include "icon.xpm"
+#include "dialogs.hpp"
 
 //Opens a chapter and loads it into webView
 inline void open_chapter(WebKitWebView * webView)
@@ -152,22 +153,7 @@ inline void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk:
 {
   if(position != -1){
     
-    Gtk::Dialog delete_dialog {"Are you sure?"};
-    Gtk::Box * box = delete_dialog.get_content_area();
-
-    Gtk::Image img;
-    img.set_from_icon_name("dialog-warning", (Gtk::IconSize)GTK_ICON_SIZE_DIALOG);
-
-    box->pack_start(img);
-
-    Gtk::Label label{"Are you sure?"};
-    box->pack_end(label);
-
-    
-    delete_dialog.add_button("Cancel", GTK_RESPONSE_CANCEL);
-    delete_dialog.add_button("Delete", GTK_RESPONSE_ACCEPT);
-
-    delete_dialog.show_all();
+    DeleteDialog delete_dialog;
   
     if(delete_dialog.run() == GTK_RESPONSE_ACCEPT)
     {
@@ -221,22 +207,8 @@ inline void close_manga(WebKitWebView * webView, Gtk::HeaderBar * headbar, Gtk::
 inline void about()
 {
   //Pretty much miscellaneous things
-  Gtk::AboutDialog dialog;
-  Gtk::Box * box = dialog.get_content_area();
-  dialog.set_authors({"DisableGraphics"});
-  dialog.set_website("https://github.com/DisableGraphics/Korai");
-  dialog.set_program_name("Korai");
-  Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
-  dialog.set_logo(pix);
-  dialog.set_license_type(Gtk::LICENSE_GPL_3_0);
-  dialog.set_copyright("Made by DisableGraphics");
-  Gtk::Label label;
-  //It's funny that the longest line on this method is the link to my Patreon
-  label.set_markup("<a href ='https://www.patreon.com/DisableGraphics' title =''>Donate</a>");
-  box->pack_start(label);
-  dialog.show_all();
-  Gtk::Widget * but = dialog.get_action_area()->get_children()[1]; //The "License" button wouldn't hide automatically, so I forced it to
-  but->hide();
+  AboutkDialog dialog;
+  
   dialog.run();
 }
 //Reloads the MIME database, which has been failing in recent versions of WebKitGTK
@@ -245,22 +217,7 @@ inline void reloadMIME(WebKitWebView * webView)
   system("rm ~/.local/share/mime/packages/user-extension-html.xml");
   system("update-mime-database ~/.local/share/mime");
 
-  //Notifies the user that the database has finished reloading
-  Gtk::Dialog okdialog{"Finished reloading"};
-  Gtk::Button * button = okdialog.add_button("OK", GTK_RESPONSE_ACCEPT);
-  button->set_hexpand();
-  Gtk::Image img;
-  img.set_from_icon_name("dialog-information", (Gtk::IconSize)GTK_ICON_SIZE_DIALOG);
-  Gtk::Box * box;
-
-  box = okdialog.get_content_area();
-  
-  box->pack_start(img);
-  Gtk::Label okmessage{"Finished reloading the database"};
-  box->pack_start(okmessage);
-  
-  okdialog.show_all();
-
+  MIMEDialog okdialog;
   switch(okdialog.run())
   {
     case GTK_RESPONSE_ACCEPT:
@@ -285,19 +242,19 @@ inline bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::Hea
   switch(event->hardware_keycode)
   {
     case 114: //Right arrow
-      if(position > -2)
+      if(position != -2)
       {
         next_chapter(webView, titleBar);
       }
       break;
     case 113: //Left arrow
-      if(position > -2)
+      if(position != -2)
       {
         previous_chapter(webView, titleBar);
       }
       break;
     case 32: //'o' key
-      if(position > -2){
+      if(position != -2){
         open(webView, titleBar);
       }
       break;
