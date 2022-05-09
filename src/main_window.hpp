@@ -2,7 +2,10 @@
 #include "args.h"
 #include "glibmm/refptr.h"
 #include "gtkmm/applicationwindow.h"
+#include "gtkmm/spinner.h"
 #include "gtkmm/window.h"
+#include <cstddef>
+#include <filesystem>
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
 #include "icon.xpm"
@@ -11,6 +14,8 @@
 #include "comp.hpp"
 #include "signal_functions.hpp"
 #include "downloader.hpp"
+#include "webkitdom/webkitdomdefines.h"
+#include <webkitdom/webkitdom.h>
 
 class MainWindow : public Gtk::Window
 {
@@ -69,13 +74,12 @@ class MainWindow : public Gtk::Window
             webkit_settings_set_allow_universal_access_from_file_urls(settings, TRUE);
             webkit_settings_set_auto_load_images(settings, TRUE);
             webkit_settings_set_enable_javascript(settings, TRUE);
-            
+            titleBar.pack_start(spin);
 
             if(defsize.x == -1 && defsize.y == -1)
             {
-                Glib::RefPtr<Gdk::Screen> s = get_screen();
-                defsize.x = (double)(s->get_width() * 0.3925);
-                defsize.y = (double)(s->get_height() * 0.722222222);
+                defsize.x = (double)(get_screen()->get_width() * 0.3925);
+                defsize.y = (double)(get_screen()->get_height() * 0.722222222);
             }
             else if(defsize.x > get_screen()->get_width() || defsize.y > get_screen()->get_height())
             {
@@ -93,16 +97,18 @@ class MainWindow : public Gtk::Window
             Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
             
             WebKitWebView * webview =  WEBKIT_WEB_VIEW( webkit_web_view_new_with_settings(settings) );
+
             /*
             * the next line does some tricks :
             * GTK_WIDGET( one ) -> convert WebKitWebView to GtkWidget (one->two)
             * Glib::wrap( GTK_WIDGET( one ) ) -> convert GtkWidget to Gtk::Widget (two->three)
             */
             Gtk::Widget * webview_widget = Glib::wrap( GTK_WIDGET( webview ) );
-            
+
             titleBar.set_border_width(1);
             
             add( *webview_widget );
+            
             set_icon(pix);
 
             set_titlebar(titleBar);
@@ -123,13 +129,14 @@ class MainWindow : public Gtk::Window
             
             webkit_web_view_reload(webview);
 
+            g_signal_connect_object(webview,"load-changed",G_CALLBACK(on_load_changed), spin.gobj(),  G_CONNECT_AFTER);
             //These all the goddamn buttons. Man, not using Glade didn't pay off...
             openButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open), webview, &titleBar));
             nextButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(next_chapter), webview, &titleBar));
             previousButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(previous_chapter), webview, &titleBar));
             deleteButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(delete_manga), webview, &titleBar, &menu));
             closeButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(close_manga), webview, &titleBar, &menu));
-            reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), webview));
+            reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), app));
             mangadexButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open_mangadex), webview, &titleBar));
             tutorialButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(help::tutorial), webview, &menu, &position, &file, &folder, &titleBar));
             #ifndef NODOWNLOAD
@@ -139,10 +146,12 @@ class MainWindow : public Gtk::Window
             aboutButton.signal_clicked().connect(sigc::ptr_fun(about));
             signal_key_press_event().connect(sigc::bind(sigc::ptr_fun(on_key_pressed), webview, &titleBar), false);
 
-            signal_delete_event().connect(sigc::bind(sigc::ptr_fun(&on_close), app));
+            signal_delete_event().connect(sigc::bind(sigc::ptr_fun(&on_close), app, webview));
 
         }
     private:
+        Gtk::Spinner spin;
+
         Gtk::HeaderBar titleBar;
         Gtk::HBox buttonsBox;
         Gtk::Popover menu;
@@ -159,40 +168,4 @@ class MainWindow : public Gtk::Window
 
         Gtk::VBox menuBox;
         Gtk::Separator sep1, sepabout, sep2;
-
-        //When korai is opened, this is executed
-        void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
-        {
-            //Creates the 'tmp' directory
-            std::filesystem::create_directory(((std::string)std::filesystem::current_path() + "/tmp/"));
-            //Loads the chapter file
-            std::ifstream chapter_file;
-            chapter_file.open(saveFile);
-            //If it exists, sets the manga to the one dictated in the chapter_file
-            if(chapter_file.good()){
-                getline(chapter_file, file);
-                if(std::filesystem::exists(file))
-                {
-                    std::cout << "exists\n";
-                    if(comp::isCompressed(file))
-                    {
-                        folder = getFolder(file);
-                        position = setPosition(folder,file);
-                        open_chapter(webView);
-                        titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
-                    }
-                    else if(comp::isImage(file))
-                    {
-                        std::cout << "Is image\n";
-                        folder = getFolder(file);
-                        position = setImageFolderPosition(getMangaFolderForImages(folder),folder);
-                        file = getFilesInFolder(folder)[0];
-                        open_chapter(webView);
-                        titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
-                    }
-                }
-            }
-            chapter_file.close();
-            
-        }
 };

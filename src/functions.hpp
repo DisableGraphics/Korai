@@ -94,7 +94,6 @@ inline std::vector<std::string> getFilesInFolder(std::string folda)
 //Decompresses the filename
 inline void decompress(std::string filename)
 {
-  std::string tmp_folder{(std::string)std::filesystem::current_path() + "/tmp/"};
   std::filesystem::remove_all(tmp_folder);
   std::filesystem::create_directory(tmp_folder);
   if(comp::isCompressed(file))
@@ -129,8 +128,11 @@ inline void load_homepage(WebKitWebView * webview)
 //Generates the page for a chapter
 inline std::string generateWebPage()
 {
-  decompress(file);
-  std::vector<std::string> filesInFolda{getFilesInFolder((std::string)std::filesystem::current_path() + "/tmp/")};
+  if(comp::isCompressed(file))
+  {
+    decompress(file);
+  }
+  std::vector<std::string> filesInFolda{getFilesInFolder(tmp_folder)};
   std::string generated_html{html::initial_html};
   for(auto & fayel : filesInFolda)
   {
@@ -164,7 +166,7 @@ inline std::string getFolder(std::string filename)
 inline std::vector<std::string> getFoldersInFolder(std::string folda)
 {
   std::vector<std::string> toreturn;
-  for (const auto & file : std::filesystem::recursive_directory_iterator(folda))
+  for (const auto & file : std::filesystem::directory_iterator(folda))
   {
     if(file.is_directory())
     {

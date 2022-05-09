@@ -1,11 +1,15 @@
 #pragma once
+#include <filesystem>
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
+#include "comp.hpp"
 #include "functions.hpp"
 #include <thread>
+#include "glibmm/refptr.h"
+#include "global_variables.hpp"
+#include "gtkmm/application.h"
 #include "icon.xpm"
 #include "dialogs.hpp"
-
 //Opens a chapter and loads it into webView
 inline void open_chapter(WebKitWebView * webView)
 {
@@ -50,19 +54,25 @@ inline void open(WebKitWebView * webview, Gtk::HeaderBar * titlebar)
   o.set_action((Gtk::FileChooserAction)GTK_FILE_CHOOSER_ACTION_OPEN);
   o.add_button("Open", GTK_RESPONSE_ACCEPT);
   o.add_button("Cancel", GTK_RESPONSE_CANCEL);
-  switch(o.run())
+  if(o.run() == GTK_RESPONSE_ACCEPT)
   {
-    case GTK_RESPONSE_ACCEPT:
+      o.hide();
       file = o.get_filename();
       folder = getFolder(file);
       position = setPosition(folder,file);
-
+      if(comp::isImage(file))
+      {
+        tmp_folder = folder;
+      }
+      else 
+      {
+        tmp_folder = (std::string)std::filesystem::current_path() + "/tmp/";
+      }
       open_chapter(webview);
       titlebar->set_subtitle(getMangaName() + " - " + getChapterName());
       gtk_widget_grab_focus(GTK_WIDGET(webview));
       std::thread t(save);
       t.detach();
-      break;
   }
 }
 
@@ -77,6 +87,7 @@ inline void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       {
         position = 0;
       }
+      tmp_folder = (std::string)std::filesystem::current_path() + "/tmp/";
       file = findFileInFolder(position);
       open_chapter(webView);
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
@@ -92,6 +103,7 @@ inline void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
         position = 0;
       }
       folder = findFolderInFolder(position);
+      tmp_folder = folder;
       
       file = findFileInFolder(0);
       open_chapter(webView);
@@ -118,6 +130,7 @@ inline void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       {
         position = filesInFolder.size() -1;
       }
+      tmp_folder = (std::string)std::filesystem::current_path() + "/tmp/";
       file = findFileInFolder(position);
       open_chapter(webView);
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
@@ -133,7 +146,7 @@ inline void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
         position = foldersInFolder.size() - 1;
       }
       folder = findFolderInFolder(position);
-      
+      tmp_folder = folder;
       file = findFileInFolder(0);
       open_chapter(webView);
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
@@ -182,6 +195,7 @@ inline void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk:
           load_homepage(webview);
         }
       }
+      tmp_folder = (std::string)std::filesystem::current_path() + "/tmp/";
       std::thread t(save);
       t.detach();
     } 
@@ -189,6 +203,63 @@ inline void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk:
     
   menu->hide();
 }
+
+//When korai is opened, this is executed
+inline void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
+{
+    //Creates the 'tmp' directory
+    std::filesystem::create_directory(((std::string)std::filesystem::current_path() + "/tmp/"));
+    //Loads the chapter file
+    std::ifstream chapter_file;
+    chapter_file.open(saveFile);
+    //If it exists, sets the manga to the one dictated in the chapter_file
+    if(chapter_file.good()){
+        getline(chapter_file, file);
+        if(std::filesystem::exists(file))
+        {
+
+            if(comp::isCompressed(file))
+            {
+                folder = getFolder(file);
+                position = setPosition(folder,file);
+                open_chapter(webView);
+                titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
+            }
+            else if(comp::isImage(file))
+            {
+                folder = getFolder(file);
+                position = setImageFolderPosition(getMangaFolderForImages(folder),folder);
+                file = getFilesInFolder(folder)[0];
+                open_chapter(webView);
+                titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
+            }
+        }
+    }
+    chapter_file.close();
+}
+
+static void on_load_changed (WebKitWebView  *web_view, WebKitLoadEvent load_event, GObject * user_data)
+{
+    switch (load_event) {
+        case WEBKIT_LOAD_STARTED:
+            gtk_spinner_start(GTK_SPINNER(user_data));
+            break;
+        case WEBKIT_LOAD_REDIRECTED:
+            gtk_spinner_start(GTK_SPINNER(user_data));
+            break;
+        case WEBKIT_LOAD_COMMITTED:
+            gtk_spinner_start(GTK_SPINNER(user_data));
+            break;
+        case WEBKIT_LOAD_FINISHED:
+                                
+            gtk_spinner_stop(GTK_SPINNER(user_data));
+            gtk_widget_grab_focus(GTK_WIDGET(web_view));
+            break;
+    }
+}
+
+
+
 //Closes the manga
 inline void close_manga(WebKitWebView * webView, Gtk::HeaderBar * headbar, Gtk::Popover * menu)
 {
@@ -201,6 +272,7 @@ inline void close_manga(WebKitWebView * webView, Gtk::HeaderBar * headbar, Gtk::
   t.detach();
 
   load_homepage(webView);
+  tmp_folder = (std::string)std::filesystem::current_path() + "/tmp/";
   menu->hide();
 }
 //Executed when the user clicks on the "about" button
@@ -212,7 +284,7 @@ inline void about()
   dialog.run();
 }
 //Reloads the MIME database, which has been failing in recent versions of WebKitGTK
-inline void reloadMIME(WebKitWebView * webView)
+inline void reloadMIME(Glib::RefPtr<Gtk::Application> app)
 {
   system("rm ~/.local/share/mime/packages/user-extension-html.xml");
   system("update-mime-database ~/.local/share/mime");
@@ -222,10 +294,16 @@ inline void reloadMIME(WebKitWebView * webView)
   {
     case GTK_RESPONSE_ACCEPT:
       okdialog.close();
+      std::filesystem::remove_all((std::string)std::filesystem::current_path() + "/tmp/");
+      std::filesystem::remove((std::string)std::filesystem::current_path() + "/index.html");
+      std::filesystem::remove((std::string)std::filesystem::current_path() + "/tutorial.html");
+      save();
+      app->quit();
       break;
   }
-  webkit_web_view_reload(webView);
+  
 }
+
 //Pretty self-explanatory
 inline void open_mangadex(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
@@ -262,12 +340,13 @@ inline bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::Hea
   return false;
 }
 
+
 //When korai is closed, this is executed
-inline bool on_close(GdkEventAny* event, Glib::RefPtr<Gtk::Application> app)
+inline bool on_close(GdkEventAny* event, Glib::RefPtr<Gtk::Application> app, WebKitWebView * webview)
 {
   //Saves the chapter in chapter_file
   save();
-
+  
   //Deletes unnecesary folders and files
   std::filesystem::remove_all((std::string)std::filesystem::current_path() + "/tmp/");
   std::filesystem::remove((std::string)std::filesystem::current_path() + "/index.html");

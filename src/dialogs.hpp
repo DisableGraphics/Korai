@@ -1,8 +1,13 @@
+#include "glibmm/refptr.h"
 #include "gtkmm/aboutdialog.h"
+#include "gtkmm/application.h"
 #include "gtkmm/dialog.h"
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
 #include <vte-2.91/vte/vte.h>
+#include "gtkmm/enums.h"
+#include "gtkmm/filechooserdialog.h"
+#include "gtkmm/headerbar.h"
 #include "icon.xpm"
 
 class MIMEDialog : public Gtk::Dialog
@@ -19,15 +24,25 @@ class MIMEDialog : public Gtk::Dialog
 
             box = get_content_area();
             
+            box->set_hexpand();
+
             box->pack_start(img);
             
             box->pack_start(okmessage);
+
+            t.set_title("Finished reloading the database");
+            set_titlebar(t);
+            t.set_show_close_button();
+            t.set_border_width(1);
+
+            okmessage.set_justify(Gtk::JUSTIFY_CENTER);
             
             show_all();
         }
     private:
+        Gtk::HeaderBar t;
         Gtk::Image img;
-        Gtk::Label okmessage{"Finished reloading the database"};
+        Gtk::Label okmessage{"Finished reloading the database\nKorai will be closed when you press the button"};
 };
 class DeleteDialog : public Gtk::Dialog
 {
@@ -41,6 +56,12 @@ class DeleteDialog : public Gtk::Dialog
             box->pack_start(img);
 
             box->pack_end(label);
+
+            set_titlebar(t);
+            t.set_show_close_button();
+            t.set_border_width(1);
+
+            t.set_title("Delete?");
             
             add_button("Cancel", GTK_RESPONSE_CANCEL);
             add_button("Delete", GTK_RESPONSE_ACCEPT);
@@ -49,6 +70,7 @@ class DeleteDialog : public Gtk::Dialog
         }
     private:
         Gtk::Image img;
+        Gtk::HeaderBar t;
         Gtk::Label label{"Are you sure?"};
    
 };
@@ -64,12 +86,21 @@ class AboutkDialog : public Gtk::AboutDialog
             set_logo(pix);
             set_license_type(Gtk::LICENSE_GPL_3_0);
             set_copyright("Made by DisableGraphics");
-            Gtk::Label label;
+            
             //It's funny that the longest line on this method is the link to my Patreon
             label.set_markup("<a href ='https://www.patreon.com/DisableGraphics' title =''>Donate</a>");
             box->pack_start(label);
+
+            set_titlebar(t);
+            t.set_show_close_button();
+            t.set_border_width(1);
+            t.set_title("About Korai");
+
             show_all();
             Gtk::Widget * but = get_action_area()->get_children()[1]; //The "License" button wouldn't hide automatically, so I forced it to
             but->hide();
         }
+    private:
+        Gtk::Label label;
+        Gtk::HeaderBar t;
 };

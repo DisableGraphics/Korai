@@ -12,6 +12,7 @@ int main(int argc, char ** argv)
     args::vector2d defsize{-1, -1};
     bool tutorial{false}, fullscreen{false}, goBack{false};
     args::parseArgs(argc, argv, fullscreen, tutorial, defsize, saveFile, goBack);
+    tmp_folder = (std::string)std::filesystem::current_path() + "/tmp/";
     if(goBack)
     {
         return EXIT_SUCCESS;

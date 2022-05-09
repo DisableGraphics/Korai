@@ -27,7 +27,24 @@ namespace html
     "<body> <center><h1>Welcome to Korai</h1><h3>The next generation manga reader</h3></center> </body>"
     "</html>" 
     ;
+
+    /*window.addEventListener("scroll", (event) => {
+    let scroll = this.scrollY;
+    document.writeline(scroll)
+    });
+    */
     //Used to create a new chapter page
-    inline std::string initial_html{"<html> <style>" + css::css + "</style><body><script>function jumpToTop() {window.scrollTo({ top: 0, behavior: 'smooth' });} window.onload = jumpToTop;</script>"};
+    inline std::string initial_html{"<html> <style>"
+     + css::css +
+    "</style>"
+    "<body>"
+    "<script>"
+    "function jumpToTop() "
+    "{"
+        "window.scrollTo({ top: 0, behavior: 'smooth' });"
+    "}"
+    "window.onload = jumpToTop;"
+     "</script>"
+     "</html>"};
 
 }

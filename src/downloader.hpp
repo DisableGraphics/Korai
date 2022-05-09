@@ -1,4 +1,5 @@
 /*THIS HEADER DEFINES EVERYTHING RELATED TO THE DOWNLOADER*/
+#include "gtkmm/headerbar.h"
 #ifndef NODOWNLOAD
 
 #include <gtkmm.h>
@@ -25,7 +26,7 @@ class DownloadDialog : public Gtk::Dialog
     DownloadDialog(std::string title){
       GtkWidget * vteTerminal = vte_terminal_new();
       Gtk::Widget * terminal_widget = Glib::wrap( GTK_WIDGET( vteTerminal ) );
-      set_title(title);
+      
       gchar **envp = g_get_environ();
       gchar *command[2] = {getenv("SHELL")};
 
@@ -49,6 +50,10 @@ class DownloadDialog : public Gtk::Dialog
 
       Gtk::Box * box = get_content_area();
       box->pack_start(e);
+      set_titlebar(t);
+      t.set_show_close_button();
+      t.set_title(title);
+      t.set_border_width(1);
 
       e.signal_activate().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e));
 
@@ -61,6 +66,7 @@ class DownloadDialog : public Gtk::Dialog
     private:
       Gtk::Entry e;
       Gtk::Button b_ok {"OK"};
+      Gtk::HeaderBar t;
 };
 
 
