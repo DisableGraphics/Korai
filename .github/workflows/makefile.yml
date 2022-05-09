@@ -17,5 +17,8 @@ jobs:
     - name: Install dependencies
       run: sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev libvte-2.91-dev -y
       
+    - name: Run Korai
+      run: cd build && ./korai
+      
     - name: Compile
       run: make
