@@ -230,6 +230,7 @@ inline void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
                 folder = getFolder(file);
                 position = setImageFolderPosition(getMangaFolderForImages(folder),folder);
                 file = getFilesInFolder(folder)[0];
+                tmp_folder = folder;
                 open_chapter(webView);
                 titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
             }

@@ -1,5 +1,6 @@
 #pragma once
 #include "args.h"
+#include "gdkmm/window.h"
 #include "glibmm/refptr.h"
 #include "gtkmm/applicationwindow.h"
 #include "gtkmm/spinner.h"
@@ -94,7 +95,7 @@ class MainWindow : public Gtk::Window
                 maximize(); //Will maximize the window. Pretty self-explanatory
             }
 
-            Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
+            move((get_screen()->get_width()/2) - defsize.x/2, (get_screen()->get_height() / 2) - (defsize.y/2));
             
             WebKitWebView * webview =  WEBKIT_WEB_VIEW( webkit_web_view_new_with_settings(settings) );
 
@@ -108,7 +109,7 @@ class MainWindow : public Gtk::Window
             titleBar.set_border_width(1);
             
             add( *webview_widget );
-            
+            Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
             set_icon(pix);
 
             set_titlebar(titleBar);
@@ -116,7 +117,7 @@ class MainWindow : public Gtk::Window
 
             if(tutorial)
             {
-                //Yes, I need these absolute f*ckton of arguments. And there's no argument copied by value. (All of them are pointers)
+                //Yes, I need these absolute f*ckton of arguments. And there's no argument copied by value. (All of them are pointers and references)
                 help::tutorial(webview, &menu, &position, &file, &folder, &titleBar);
             }
             else
