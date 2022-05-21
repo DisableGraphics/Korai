@@ -147,10 +147,10 @@ class MainWindow : public Gtk::Window
             deleteButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(delete_manga), webview, &titleBar, &menu));
             closeButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(close_manga), webview, &titleBar, &menu));
             reloadMIMEbutton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(reloadMIME), app));
-            mangadexButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open_mangadex), webview, &titleBar));
+            mangadexButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open_mangadex), webview, &titleBar, ""));
             tutorialButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(help::tutorial), webview, &menu, &position, &file, &folder, &titleBar));
             #ifndef NODOWNLOAD
-            downloadButton.signal_clicked().connect(sigc::ptr_fun(download_manga));
+            downloadButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(download_manga), webview));
             #endif
 
             aboutButton.signal_clicked().connect(sigc::ptr_fun(about));

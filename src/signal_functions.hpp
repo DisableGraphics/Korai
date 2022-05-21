@@ -70,10 +70,11 @@ inline void open(WebKitWebView * webview, Gtk::HeaderBar * titlebar)
       }
       open_chapter(webview);
       titlebar->set_subtitle(getMangaName() + " - " + getChapterName());
-      gtk_widget_grab_focus(GTK_WIDGET(webview));
+      
       std::thread t(save);
       t.detach();
   }
+  gtk_widget_grab_focus(GTK_WIDGET(webview));
 }
 
 //Goes to the next chapter and loads it into 'webView'. Changes 'titlebar's subtitle to the name of the manga and the chapter name
@@ -91,7 +92,6 @@ inline void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       file = findFileInFolder(position);
       open_chapter(webView);
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
-      gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
     else if(comp::isImage(file))
     {
@@ -108,7 +108,6 @@ inline void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       file = findFileInFolder(0);
       open_chapter(webView);
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
-      gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
     std::thread t(save);
     t.detach();
@@ -117,6 +116,7 @@ inline void next_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
   {
     webkit_web_view_go_forward(webView);
   }
+  gtk_widget_grab_focus(GTK_WIDGET(webView));
 }
 
 //Goes to the previous chapter and loads it into 'webView'. Changes 'titlebar's subtitle to the name of the manga and the chapter name
@@ -134,7 +134,6 @@ inline void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       file = findFileInFolder(position);
       open_chapter(webView);
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
-      gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
     else if(comp::isImage(file))
     {
@@ -150,7 +149,6 @@ inline void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
       file = findFileInFolder(0);
       open_chapter(webView);
       titleBar->set_subtitle(getMangaName() + " - " + getChapterName());
-      gtk_widget_grab_focus(GTK_WIDGET(webView));
     }
     std::thread t(save);
     t.detach();
@@ -159,6 +157,8 @@ inline void previous_chapter(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
   {
     webkit_web_view_go_back(webView);
   }
+  gtk_widget_grab_focus(GTK_WIDGET(webView));
+
 }
 
 //Deletes the manga
@@ -204,6 +204,23 @@ inline void delete_manga(WebKitWebView * webview, Gtk::HeaderBar * headbar, Gtk:
   menu->hide();
 }
 
+//Pretty self-explanatory
+inline void open_mangadex(WebKitWebView * webView, Gtk::HeaderBar * titleBar, std::string url = "")
+{
+  if(url == "")
+  {
+    webkit_web_view_load_uri(webView, "https://mangadex.org");
+  }
+  else 
+  {
+    webkit_web_view_load_uri(webView, url.c_str());  
+  }
+  position = -2; //Needs to be different from -1. 
+  file = "";
+  folder = "";
+  titleBar->set_subtitle("MangaDex");
+}
+
 //When korai is opened, this is executed
 inline void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
 {
@@ -235,6 +252,11 @@ inline void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
                 titlebar.set_subtitle(getMangaName() + " - " + getChapterName());
             }
         }
+        else if(file.find("http") != std::string::npos)
+        {
+          open_mangadex(webView, &titlebar, file);
+          position = -2;
+        }
     }
     chapter_file.close();
 }
@@ -243,7 +265,12 @@ static void on_load_changed (WebKitWebView  *web_view, WebKitLoadEvent load_even
 {
     switch (load_event) {
         case WEBKIT_LOAD_STARTED:
+            if(position == -2)
+            {
+              file = webkit_web_view_get_uri(web_view);
+            }  
             gtk_spinner_start(GTK_SPINNER(user_data));
+            
             break;
         case WEBKIT_LOAD_REDIRECTED:
             gtk_spinner_start(GTK_SPINNER(user_data));
@@ -252,7 +279,10 @@ static void on_load_changed (WebKitWebView  *web_view, WebKitLoadEvent load_even
             gtk_spinner_start(GTK_SPINNER(user_data));
             break;
         case WEBKIT_LOAD_FINISHED:
-                                
+            if(position == -2)
+            {
+              file = webkit_web_view_get_uri(web_view);
+            }                    
             gtk_spinner_stop(GTK_SPINNER(user_data));
             gtk_widget_grab_focus(GTK_WIDGET(web_view));
             break;
@@ -305,16 +335,6 @@ inline void reloadMIME(Glib::RefPtr<Gtk::Application> app)
   
 }
 
-//Pretty self-explanatory
-inline void open_mangadex(WebKitWebView * webView, Gtk::HeaderBar * titleBar)
-{
-  webkit_web_view_load_uri(webView, "https://mangadex.org");
-  position = -2; //Needs to be different from -1. 
-  file = "";
-  folder = "";
-  titleBar->set_subtitle("MangaDex");
-}
-
 //This is executed when there's a keypress
 inline bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::HeaderBar * titleBar)
 {
@@ -345,7 +365,14 @@ inline bool on_key_pressed(GdkEventKey* event, WebKitWebView * webView, Gtk::Hea
 //When korai is closed, this is executed
 inline bool on_close(GdkEventAny* event, Glib::RefPtr<Gtk::Application> app, WebKitWebView * webview)
 {
+  webkit_web_view_reload(webview);
   //Saves the chapter in chapter_file
+
+  if(position == -2)
+  {
+    file = webkit_web_view_get_uri(webview);
+  }
+
   save();
   
   //Deletes unnecesary folders and files

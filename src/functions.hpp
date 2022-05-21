@@ -12,6 +12,7 @@
 
 inline void save()
 {
+  std::filesystem::remove(saveFile);
   std::ofstream chapter_file;
   chapter_file.open(saveFile);
 
