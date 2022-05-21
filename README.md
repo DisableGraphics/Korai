@@ -41,7 +41,7 @@ Korai requires: <br>
 
 - **Ubuntu & Debian:** 
  ```
-sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev libvte-2.91-dev
+sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev
 ``` 
 - **Arch:** The AUR source is automatically updated with GitHub and automatically grabs the dependencies
 ```
@@ -50,12 +50,12 @@ yay -S korai
 **Note:** The default chapter file path is `/home/$USER/.local/share/chapter.conf` if korai has been installed using this method. <br> <br> 
 Although you can still build Korai from source:
 ```
-sudo pacman -S gtkmm3 webkit2gtk libarchive vte3
+sudo pacman -S gtkmm3 webkit2gtk libarchive 
 ```
 
 **If the integrated downloader is wanted:**
-- Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH
-- Arch: Automatically downloaded using the AUR (If you want to build Korai from source: `yay -S mangodl`)
+- Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH. Also install libvte-2.91-dev with: `sudo apt install libvte-2.91-dev`
+- Arch: Automatically downloaded using the AUR (If you want to build Korai from source: `yay -S mangodl vte3`)
 
 # Building
 To build Korai, please enter the following commands:
