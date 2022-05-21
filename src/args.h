@@ -1,7 +1,10 @@
 #pragma once
 #include <cstring>
+#include <filesystem>
 #include <iostream>
 #include "help.h"
+#include "global_variables.hpp"
+#include "functions.hpp"
 namespace args{
     //Two dimensional int
     typedef struct{
@@ -63,6 +66,13 @@ namespace args{
             else if(strcmp(argv[i], "-t") == 0 || strcmp(argv[i], "--tutorial") == 0)
             {
                 tutorial = true;
+            }
+            else if(std::filesystem::exists(argv[i]) && !std::filesystem::is_directory(argv[i]))
+            {
+                file = argv[i];
+                folder = getFolder(file);
+                position = setPosition(folder, file);
+
             }
             else //Error
             {

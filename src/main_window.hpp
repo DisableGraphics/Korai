@@ -123,9 +123,18 @@ class MainWindow : public Gtk::Window
             else
             {
                 load_homepage(webview);
-                on_load(webview, titleBar);
+                if(file == "")
+                {
+                    on_load(webview, titleBar);
+                }
+                else
+                {
+                    open_chapter(webview);
+                    titleBar.set_subtitle(getMangaName() + " - " + getChapterName());
+                }
+                
             }
-
+            
             show_all();
             
             webkit_web_view_reload(webview);
