@@ -24,6 +24,10 @@ namespace help{
         std::cout << "\t-f\t--save-file\tChange the default save file path\n";
         std::cout << "\t-m\t--maximized\tMaximize the window\n";
         std::cout << "\t-t\t--tutorial\tRun a tutorial\n";
+        #ifndef NODOWNLOAD
+        std::cout << "\t-c\t--check\t\tCheck if 'mangadex-downloader' is installed\n";
+        #endif
+
         std::cout << "\t-h\t--help\t\tDisplay help\n";
         std::cout << "\n";
         for(int i{0}; i < w.ws_col; i++)

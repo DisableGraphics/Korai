@@ -2,6 +2,7 @@
 #include <cstring>
 #include <filesystem>
 #include <iostream>
+#include "comp.hpp"
 #include "help.h"
 #include "global_variables.hpp"
 #include "functions.hpp"
@@ -40,7 +41,7 @@ namespace args{
         return r;
     }
     //Parses the arguments. Much better here than in the main.cpp file
-    inline void parseArgs(int argc, char ** argv, bool &fullscreen, bool &tutorial, vector2d &defsize, std::string &saveFile, bool &goBack)
+    inline void parseArgs(int argc, char ** argv, bool &fullscreen, bool &tutorial, vector2d &defsize, std::string &saveFile, bool &goBack, bool &checkdownloader)
     {
         for(int i{1}; i < argc; i++)
         {
@@ -67,11 +68,20 @@ namespace args{
             {
                 tutorial = true;
             }
+            #ifndef NODOWNLOAD
+            else if(strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--check") == 0)
+            {
+                checkdownloader = true;
+            }
+            #endif
             else if(std::filesystem::exists(argv[i]) && !std::filesystem::is_directory(argv[i]))
             {
-                file = argv[i];
-                folder = getFolder(file);
-                position = setPosition(folder, file);
+                if(comp::isCompressed(argv[i]))
+                {
+                    file = argv[i];
+                    folder = getFolder(file);
+                    position = setPosition(folder, file);
+                }
 
             }
             else //Error
