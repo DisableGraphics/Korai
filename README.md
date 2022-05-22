@@ -55,7 +55,8 @@ sudo pacman -S gtkmm3 webkit2gtk libarchive
 
 **If the integrated downloader is wanted:**
 - Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH. Also install libvte-2.91-dev with: `sudo apt install libvte-2.91-dev`
-- Arch: Automatically downloaded using the AUR (If you want to build Korai from source: `yay -S mangodl vte3`)
+- Arch: Automatically downloaded using the AUR (If you want to build Korai from source: `yay -S mangodl vte3`).
+- Any distro will need to `pip install mangadex-downloader` (you can run `korai -c` to install it) in order to get downloader integration with MangaDex
 
 # Building
 To build Korai, please enter the following commands:
