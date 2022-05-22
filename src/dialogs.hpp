@@ -10,7 +10,24 @@
 #include "gtkmm/headerbar.h"
 #include "icon.xpm"
 
-class MIMEDialog : public Gtk::Dialog
+class custom_dialog : public Gtk::Dialog
+{
+    public:
+        custom_dialog()
+        {
+            set_titlebar(titlebar);
+            titlebar.set_show_close_button();
+            titlebar.set_border_width(1);
+        }
+        Gtk::HeaderBar * get_headerbar()
+        {
+            return &titlebar;
+        }
+    private:
+        Gtk::HeaderBar titlebar;
+};
+
+class MIMEDialog : public custom_dialog
 {
     public:
         MIMEDialog()
@@ -30,21 +47,17 @@ class MIMEDialog : public Gtk::Dialog
             
             box->pack_start(okmessage);
 
-            t.set_title("Finished reloading the database");
-            set_titlebar(t);
-            t.set_show_close_button();
-            t.set_border_width(1);
-
+            get_headerbar()->set_title("Finished reloading the database");
+            
             okmessage.set_justify(Gtk::JUSTIFY_CENTER);
             
             show_all();
         }
     private:
-        Gtk::HeaderBar t;
         Gtk::Image img;
         Gtk::Label okmessage{"Finished reloading the database\nKorai will be closed when you press the button"};
 };
-class DeleteDialog : public Gtk::Dialog
+class DeleteDialog : public custom_dialog
 {
     public:
         DeleteDialog()
@@ -57,11 +70,7 @@ class DeleteDialog : public Gtk::Dialog
 
             box->pack_end(label);
 
-            set_titlebar(t);
-            t.set_show_close_button();
-            t.set_border_width(1);
-
-            t.set_title("Delete?");
+            get_headerbar()->set_title("Delete?");
             
             add_button("Cancel", GTK_RESPONSE_CANCEL);
             add_button("Delete", GTK_RESPONSE_ACCEPT);
@@ -70,10 +79,10 @@ class DeleteDialog : public Gtk::Dialog
         }
     private:
         Gtk::Image img;
-        Gtk::HeaderBar t;
         Gtk::Label label{"Are you sure?"};
    
 };
+
 class AboutkDialog : public Gtk::AboutDialog
 {   
     public:
