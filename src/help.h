@@ -25,7 +25,7 @@ namespace help{
         std::cout << "\t-m\t--maximized\tMaximize the window\n";
         std::cout << "\t-t\t--tutorial\tRun a tutorial\n";
         #ifndef NODOWNLOAD
-        std::cout << "\t-c\t--check\t\tCheck if 'mangadex-downloader' is installed\n";
+        std::cout << "\t-c\t--check\t\tInstalls 'mangadex-downloader'\n";
         #endif
 
         std::cout << "\t-h\t--help\t\tDisplay help\n";

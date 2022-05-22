@@ -18,18 +18,13 @@ int main(int argc, char ** argv)
     {
         return EXIT_SUCCESS;
     }
-    
+
     #ifndef NODOWNLOAD
     if(checkdownloader)
     {
-        if(system("mangadex-downloader --help") == 127)
-        {
-            system("yes y | pip install mangadex-downloader");
-        }
-        else 
-        {
-            std::cout << "\n\n'mangadex-downloader' seems to be in order. Starting up Korai\n";
-        }
+        
+        system("yes y | pip install mangadex-downloader");
+        
     }
     #endif
 
