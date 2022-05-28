@@ -31,7 +31,6 @@ static void save_pos(WebKitWebPage * web_page)
     o.open(std::filesystem::current_path().string() + "/pos.conf");
     o <<  webkit_dom_dom_window_get_scroll_y(win);
     o.close();
-    std::cout << "Y: " << webkit_dom_dom_window_get_scroll_y(win) << "\nX: " << webkit_dom_dom_window_get_scroll_x(win) << "\n";
 
   }
   
@@ -55,32 +54,19 @@ window_object_cleared_callback (WebKitScriptWorld *world,
   }
 }
 
-static void
-web_page_created_callback (WebKitWebExtension *extension,
-                           WebKitWebPage      *web_page,
-                           gpointer            user_data)
-{
-  g_print ("Page %d created for %s\n",
-            webkit_web_page_get_id (web_page),
-            webkit_web_page_get_uri (web_page));
-  
-}
-
 //
 //  Extension initialization thing.
 //
 extern "C" G_MODULE_EXPORT void
 webkit_web_extension_initialize (WebKitWebExtension *extension)
 {
-    std::cout << "EXTENSION INITIALIZED\n";
+    std::cout << "[INFO] Extension initialized: savepos\n";
     
     g_signal_connect (webkit_script_world_get_default(),
                       "window-object-cleared", 
                       G_CALLBACK (window_object_cleared_callback), 
                       NULL);
-    g_signal_connect (extension, "page-created",
-                      G_CALLBACK (web_page_created_callback),
-                      NULL);
+
 
     
 }
