@@ -15,7 +15,7 @@ namespace css
             "display: block;\n"
             "margin-left: auto;\n"
             "margin-right: auto;\n"
-            "max-width: 95%;\n"
+            "width: 95%;\n"
             "max-height: calc((29.7 / 21) * 95%);\n"
         "}\n"
     };
@@ -34,17 +34,17 @@ namespace html
     });
     */
     //Used to create a new chapter page
-    inline std::string initial_html{"<html> <style>"
+    inline std::string initial_html(std::string scrollto){return "<html> <style>"
      + css::css +
     "</style>"
     "<body>"
     "<script>"
     "function jumpToTop() "
     "{"
-        "window.scrollTo({ top: 0, behavior: 'smooth' });"
+        "window.scrollTo({ top: " + scrollto +", behavior: 'smooth' });"
     "}"
     "window.onload = jumpToTop;"
      "</script>"
-     "</html>"};
+     "</html>";};
 
 }

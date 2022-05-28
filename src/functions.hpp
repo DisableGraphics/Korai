@@ -129,17 +129,37 @@ inline void load_homepage(WebKitWebView * webview)
 //Generates the page for a chapter
 inline std::string generateWebPage()
 {
+  std::string scrollto{"0"};
+  if(std::filesystem::exists((std::string)std::filesystem::current_path() + "/pos.conf") && gotopos)
+  {
+      std::ifstream i;
+      i.open((std::string)std::filesystem::current_path() + "/pos.conf");
+      i >> scrollto;
+      i.close();
+  }
+
   if(comp::isCompressed(file))
   {
     decompress(file);
   }
   std::vector<std::string> filesInFolda{getFilesInFolder(tmp_folder)};
-  std::string generated_html{html::initial_html};
-  for(auto & fayel : filesInFolda)
+  std::string generated_html{html::initial_html(scrollto)};
+  if(gotopos)
   {
-    generated_html += "<img src=\"" + fayel + "\" loading=\"lazy\"><br>\n"; //Lazy loading to improve performance
+    for(auto & fayel : filesInFolda)
+    {
+      generated_html += "<img src=\"" + fayel + "\" " /*loading=\"lazy\"*/"><br>\n"; //Lazy loading prevents Korai from going to the initial position correctly
+    }
+  }
+  else 
+  {
+    for(auto & fayel : filesInFolda)
+    {
+      generated_html += "<img src=\"" + fayel + "\" loading=\"lazy\"><br>\n"; //Lazy loading to improve performance otherwise
+    }
   }
   generated_html += "</body> </html>";
+  gotopos = false;
   return generated_html;
 }
 

@@ -224,6 +224,7 @@ inline void open_mangadex(WebKitWebView * webView, Gtk::HeaderBar * titleBar, st
 //When korai is opened, this is executed
 inline void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
 {
+
     //Creates the 'tmp' directory
     std::filesystem::create_directory(((std::string)std::filesystem::current_path() + "/tmp/"));
     //Loads the chapter file

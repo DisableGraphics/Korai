@@ -7,6 +7,7 @@
 #include "gtkmm/window.h"
 #include <cstddef>
 #include <filesystem>
+#include <fstream>
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
 #include "icon.xpm"
@@ -15,6 +16,7 @@
 #include "comp.hpp"
 #include "signal_functions.hpp"
 #include "downloader.hpp"
+#include "web_contents.h"
 #include "webkitdom/webkitdomdefines.h"
 #include <webkitdom/webkitdom.h>
 
@@ -69,6 +71,8 @@ class MainWindow : public Gtk::Window
             buttonsBox.pack_start(openButton);
             buttonsBox.pack_start(nextButton);
 
+            webkit_web_context_set_web_extensions_directory(webkit_web_context_get_default(), (std::filesystem::current_path().string() + "/korai-extensions").c_str());
+
             WebKitSettings * settings = WEBKIT_SETTINGS(webkit_settings_new());
             webkit_settings_set_enable_smooth_scrolling(settings, TRUE);
             webkit_settings_set_allow_file_access_from_file_urls(settings, TRUE);
@@ -115,6 +119,8 @@ class MainWindow : public Gtk::Window
             set_titlebar(titleBar);
             titleBar.set_show_close_button();
 
+            
+
             if(tutorial)
             {
                 //Yes, I need these absolute f*ckton of arguments. And there's no argument copied by value. (All of them are pointers and references)
@@ -134,12 +140,13 @@ class MainWindow : public Gtk::Window
                 }
                 
             }
-            
+
             show_all();
             
             webkit_web_view_reload(webview);
 
             g_signal_connect_object(webview,"load-changed",G_CALLBACK(on_load_changed), spin.gobj(),  G_CONNECT_AFTER);
+            g_signal_connect(webkit_web_context_get_default(), "initialize-web-extensions",G_CALLBACK(on_get_extensions), NULL);
             //These all the goddamn buttons. Man, not using Glade didn't pay off...
             openButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open), webview, &titleBar));
             nextButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(next_chapter), webview, &titleBar));
@@ -178,4 +185,10 @@ class MainWindow : public Gtk::Window
 
         Gtk::VBox menuBox;
         Gtk::Separator sep1, sepabout, sep2;
+
+        static void on_get_extensions(WebKitWebContext *context, gpointer user_data)
+        {
+            std::string f{std::filesystem::current_path()};
+            webkit_web_context_set_web_extensions_directory(context, f.c_str());
+        }
 };
