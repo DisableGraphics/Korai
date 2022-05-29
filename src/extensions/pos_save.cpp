@@ -27,6 +27,7 @@ static void save_pos(WebKitWebPage * web_page)
   /*  I beg to dream and differ from the hollow lies 
       
       This fuckery that appears here is mostly a crude attempt at making a way to communicate between extensions
+      (Telling the other extensions to close, mostly)
   */
   while(true && !std::filesystem::exists((std::string) std::filesystem::current_path() + "/poslck"))
   {
