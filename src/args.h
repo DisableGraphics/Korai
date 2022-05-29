@@ -68,6 +68,20 @@ namespace args{
             {
                 tutorial = true;
             }
+            else if(strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--extension") == 0)
+            {
+                std::filesystem::create_directory((std::string) std::filesystem::current_path() + "/korai-extensions");
+                for (const auto & entry : std::filesystem::directory_iterator((std::string) std::filesystem::current_path()))
+                {
+                    
+                    if(entry.path().extension() == ".so")
+                    {
+                        std::cout << entry.path() << std::endl;
+                        std::filesystem::copy(entry.path(), (std::string) std::filesystem::current_path() + "/korai-extensions");
+                        std::filesystem::remove(entry.path());
+                    }
+                }
+            }
             #ifndef NODOWNLOAD
             else if(strcmp(argv[i], "-c") == 0 || strcmp(argv[i], "--check") == 0)
             {

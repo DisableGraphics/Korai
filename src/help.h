@@ -24,6 +24,7 @@ namespace help{
         std::cout << "\t-f\t--save-file\tChange the default save file path\n";
         std::cout << "\t-m\t--maximized\tMaximize the window\n";
         std::cout << "\t-t\t--tutorial\tRun a tutorial\n";
+        std::cout << "\t-e\t--extension\tSetups the extensions. Place the extensions here\n";
         #ifndef NODOWNLOAD
         std::cout << "\t-c\t--check\t\tInstalls 'mangadex-downloader'\n";
         #endif
