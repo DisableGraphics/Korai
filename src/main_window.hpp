@@ -1,10 +1,5 @@
 #pragma once
 #include "args.h"
-#include "gdkmm/window.h"
-#include "glibmm/refptr.h"
-#include "gtkmm/applicationwindow.h"
-#include "gtkmm/spinner.h"
-#include "gtkmm/window.h"
 #include <cstddef>
 #include <filesystem>
 #include <fstream>
@@ -17,8 +12,6 @@
 #include "signal_functions.hpp"
 #include "downloader.hpp"
 #include "web_contents.h"
-#include "webkitdom/webkitdomdefines.h"
-#include <webkitdom/webkitdom.h>
 
 class MainWindow : public Gtk::Window
 {

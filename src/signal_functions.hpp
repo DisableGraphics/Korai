@@ -5,9 +5,7 @@
 #include "comp.hpp"
 #include "functions.hpp"
 #include <thread>
-#include "glibmm/refptr.h"
 #include "global_variables.hpp"
-#include "gtkmm/application.h"
 #include "icon.xpm"
 #include "dialogs.hpp"
 //Opens a chapter and loads it into webView

@@ -1,12 +1,5 @@
-#include "glibmm/refptr.h"
-#include "gtkmm/aboutdialog.h"
-#include "gtkmm/application.h"
-#include "gtkmm/dialog.h"
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
-#include "gtkmm/enums.h"
-#include "gtkmm/filechooserdialog.h"
-#include "gtkmm/headerbar.h"
 #include "icon.xpm"
 
 class custom_dialog : public Gtk::Dialog
