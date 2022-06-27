@@ -4,7 +4,6 @@
 #include "gtkmm/dialog.h"
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
-#include <vte-2.91/vte/vte.h>
 #include "gtkmm/enums.h"
 #include "gtkmm/filechooserdialog.h"
 #include "gtkmm/headerbar.h"

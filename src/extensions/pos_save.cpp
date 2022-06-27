@@ -24,7 +24,7 @@ static void save_pos(WebKitWebPage * web_page)
 
   std::ofstream o; 
   
-  /*  I beg to dream and differ from the hollow lies 
+  /*  I beg to dream and differ from the hollow lies - the first person who guesses where is this quote from will be followed by me in GitHub
       
       This fuckery that appears here is mostly a crude attempt at making a way to communicate between extensions
       (Telling the other extensions to close, mostly)
@@ -34,6 +34,7 @@ static void save_pos(WebKitWebPage * web_page)
     sleep(SLEEP_PERIOD);
 
     o.open(std::filesystem::current_path().string() + "/pos.conf");
+    //Yes, I know it's deprecated, but the JavaScriptCore documentation is far too lacking
     o <<  webkit_dom_dom_window_get_scroll_y(win);
     o.close();
   } 

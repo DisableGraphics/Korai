@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
+#ifdef __linux__
 #include <sys/ioctl.h>
+#endif
 #include <stdio.h>
 #include <webkit2/webkit2.h>
 #include <gtkmm.h>
@@ -12,12 +14,14 @@
 namespace help{
     inline void displayHelp() //Displays the help
     {
+        #ifdef __linux__
         struct winsize w;
         ioctl(0, TIOCGWINSZ, &w);
         for(int i{0}; i < w.ws_col; i++) //Writes '-' to fill the terminal (Looks pretty good)
         {
             std::cout << "-";
         }
+        #endif
         std::cout << "\n";
         std::cout << "Korai: Next generation manga reader\t Author: DisableGraphics\n\nLicensed under the GNU GPL v3.\n\n";
         std::cout << "Options:\n\t-s\t--size\t\tChange window size. In wxh format. Eg: 400x300\n";
@@ -31,10 +35,12 @@ namespace help{
 
         std::cout << "\t-h\t--help\t\tDisplay help\n";
         std::cout << "\n";
+        #ifdef __linux__
         for(int i{0}; i < w.ws_col; i++)
         {
             std::cout << "-";
         }
+        #endif
     }
     inline void tutorial(WebKitWebView * webView, Gtk::Popover * popover, int * position, std::string * file, std::string * folder, Gtk::HeaderBar * titlebar) //Creates the tutorial and loads it
     {
