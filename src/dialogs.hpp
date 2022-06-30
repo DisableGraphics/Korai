@@ -1,6 +1,7 @@
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
 #include "icon.xpm"
+#include "version.h"
 
 class custom_dialog : public Gtk::Dialog
 {
@@ -82,6 +83,7 @@ class AboutkDialog : public Gtk::AboutDialog
             Gtk::Box * box = get_content_area();
             set_authors({"DisableGraphics"});
             set_website("https://github.com/DisableGraphics/Korai");
+            set_version("Version: " VERSION);
             set_program_name("Korai");
             Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
             set_logo(pix);

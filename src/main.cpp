@@ -7,7 +7,6 @@
 
 int main(int argc, char ** argv)
 {
-    
     saveFile = (std::string)std::filesystem::current_path() + "/chapter.conf";
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
     args::vector2d defsize{-1, -1};

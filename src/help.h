@@ -9,12 +9,13 @@
 #include "web_contents.h"
 #include <fstream>
 #include <filesystem>
+#include "version.h"
 
 namespace help{
     inline void displayHelp() //Displays the help
     {
         #ifdef __linux__
-        struct winsize w;
+        struct winsize w; //The terminal size. Pretty misleading...
         ioctl(0, TIOCGWINSZ, &w);
         for(int i{0}; i < w.ws_col; i++) //Writes '-' to fill the terminal (Looks pretty good)
         {
@@ -22,7 +23,7 @@ namespace help{
         }
         #endif
         std::cout << "\n";
-        std::cout << "Korai: Next generation manga reader\t Author: DisableGraphics\n\nLicensed under the GNU GPL v3.\n\n";
+        std::cout << "Korai: Next generation manga reader\t Author: DisableGraphics\n\nVersion: " << VERSION << "Licensed under the GNU GPL v3.\n\n";
         std::cout << "Options:\n\t-s\t--size\t\tChange window size. In wxh format. Eg: 400x300\n";
         std::cout << "\t-f\t--save-file\tChange the default save file path\n";
         std::cout << "\t-m\t--maximized\tMaximize the window\n";
@@ -41,6 +42,7 @@ namespace help{
         }
         #endif
     }
+    //POINTER STRIKE
     inline void tutorial(WebKitWebView * webView, Gtk::Popover * popover, int * position, std::string * file, std::string * folder, Gtk::HeaderBar * titlebar) //Creates the tutorial and loads it
     {
         *file = "";

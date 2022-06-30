@@ -24,7 +24,7 @@ static void save_pos(WebKitWebPage * web_page)
 
   std::ofstream o; 
   
-  /*  I beg to dream and differ from the hollow lies - the first person who guesses where is this quote from will be followed by me in GitHub
+  /*  I beg to dream and differ from the hollow lies - the first person to gues where is this quote from will be followed by me in GitHub
       
       This fuckery that appears here is mostly a crude attempt at making a way to communicate between extensions
       (Telling the other extensions to close, mostly)
