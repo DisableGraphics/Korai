@@ -1,13 +1,7 @@
 /*THIS HEADER DEFINES EVERYTHING RELATED TO THE DOWNLOADER*/
-#include "gtkmm/box.h"
-#include "gtkmm/enums.h"
-#include "gtkmm/headerbar.h"
-#include "gtkmm/hvbox.h"
-#include "gtkmm/image.h"
-#include "gtkmm/window.h"
+#ifndef NODOWNLOAD
 #include <cstddef>
 #include <filesystem>
-#ifndef NODOWNLOAD
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
 #include <vte-2.91/vte/vte.h>
