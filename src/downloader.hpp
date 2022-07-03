@@ -25,13 +25,13 @@ inline void runCommandOnTerminal(GtkWidget * terminal, Gtk::Entry * e)
     toRun = "mangadex-downloader --save-as cbz --unsafe --folder " + (std::string)std::filesystem::current_path() + "/downloads ";
 
     toRun += mng;
-    toRun += " && exit";
+    
   }
   else
   {
     toRun += e->get_text();
   }
-  toRun += "\n";
+  toRun += " && exit\n";
   vte_terminal_feed_child(VTE_TERMINAL(terminal), toRun.c_str(), -1);
 }
 
