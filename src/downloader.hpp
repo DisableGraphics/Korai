@@ -1,4 +1,11 @@
 /*THIS HEADER DEFINES EVERYTHING RELATED TO THE DOWNLOADER*/
+#include "gtkmm/box.h"
+#include "gtkmm/enums.h"
+#include "gtkmm/headerbar.h"
+#include "gtkmm/hvbox.h"
+#include "gtkmm/image.h"
+#include "gtkmm/window.h"
+#include <cstddef>
 #include <filesystem>
 #ifndef NODOWNLOAD
 #include <gtkmm.h>
@@ -6,6 +13,7 @@
 #include <vte-2.91/vte/vte.h>
 #include "global_variables.hpp"
 #include "externalFunctions.h"
+#include "dialogs.hpp"
 
 inline void runCommandOnTerminal(GtkWidget * terminal, Gtk::Entry * e)
 {
@@ -33,11 +41,47 @@ static void execute_order_66(VteTerminal *terminal, GPid pid, GError *error, gpo
     {
       std::string toRun = "mangadex-downloader --save-as cbz --unsafe --folder " + (std::string)std::filesystem::current_path() + "/downloads ";
       toRun += (char *) user_data;
-      toRun  += "\n";
+      toRun  += " && exit\n";
       vte_terminal_feed_child(VTE_TERMINAL(terminal), toRun.c_str(), -1);
     }
     
     if (pid == -1) gtk_main_quit();
+}
+
+class NotifyDialog : public custom_dialog
+{
+  public:
+    NotifyDialog()
+    {
+      set_title("Finished downloading");
+      dialog_icon.set_from_icon_name("dialog-information", Gtk::ICON_SIZE_DIALOG);
+
+      label.set_text("Finished downloading.\nPlease close the downloader window.");
+
+      Gtk::Box * c_box = get_content_area();
+
+      box.pack_start(dialog_icon);
+      box.pack_start(label);
+      c_box->pack_start(box);
+
+      add_button("OK", GTK_RESPONSE_OK);
+      show_all();
+    }
+  private:
+    Gtk::VBox box;
+    Gtk::Image dialog_icon;
+    Gtk::Label label;
+};
+
+static void notify(gpointer user_data)
+{
+  NotifyDialog * notify = new NotifyDialog();
+  if(notify->run() == GTK_RESPONSE_OK)
+  {
+    notify->hide();
+  }
+  //Note: I'm unable to close the window using this callback function. 
+  //If someone manages to do so will receive my thanks 
 }
 
 class DownloadDialog : public Gtk::Window
@@ -63,25 +107,31 @@ class DownloadDialog : public Gtk::Window
             execute_order_66,  /* callback */
             (gpointer)webkit_web_view_get_uri(webView));        /* user_data */
       
-
+      g_signal_connect(vteTerminal, "child-exited", G_CALLBACK(notify), NULL);
+      
       g_strfreev(envp);
 
       e.set_placeholder_text("Manga title");
 
       add(box);
-
-      box.pack_start(e);
+      if(position != -2)
+      {
+        box.pack_start(e);
+        box.pack_start(b_ok);
+      }
       set_titlebar(t);
       t.set_show_close_button();
       t.set_title(title);
       t.set_border_width(1);
 
       e.signal_activate().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e));
-
-      box.pack_start(b_ok);
       b_ok.signal_clicked().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e)); 
 
       box.pack_start(*terminal_widget); 
+    }
+    void hide_all()
+    {
+      this->hide();
     }
     private:
       Gtk::VBox box;

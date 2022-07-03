@@ -1,3 +1,4 @@
+#pragma once
 #include <gtkmm.h>
 #include <webkit2/webkit2.h>
 #include "icon.xpm"
