@@ -42,7 +42,7 @@ Korai requires: <br>
  ```
 sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev
 ``` 
-- **Arch:** The AUR source is automatically updated with GitHub and automatically grabs the dependencies
+- **Arch:** The AUR source is automatically updated with GitHub and automatically grabs the dependencies (Including mangadex-downloader)
 ```
 yay -S korai
 ```
