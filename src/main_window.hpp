@@ -102,8 +102,6 @@ class MainWindow : public Gtk::Window
             * Glib::wrap( GTK_WIDGET( one ) ) -> convert GtkWidget to Gtk::Widget (two->three)
             */
             Gtk::Widget * webview_widget = Glib::wrap( GTK_WIDGET( webview ) );
-
-            titleBar.set_border_width(1);
             
             add( *webview_widget );
             Glib::RefPtr<Gdk::Pixbuf> pix = Gdk::Pixbuf::create_from_xpm_data(icon);
@@ -132,7 +130,7 @@ class MainWindow : public Gtk::Window
                     titleBar.set_subtitle(getMangaName() + " - " + getChapterName());
                 }
                 
-            }
+            } 
 
             show_all();
             
