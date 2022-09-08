@@ -11,7 +11,6 @@ class custom_dialog : public Gtk::Dialog
         {
             set_titlebar(titlebar);
             titlebar.set_show_close_button();
-            titlebar.set_border_width(1);
         }
         Gtk::HeaderBar * get_headerbar()
         {
@@ -97,7 +96,6 @@ class AboutkDialog : public Gtk::AboutDialog
 
             set_titlebar(t);
             t.set_show_close_button();
-            t.set_border_width(1);
             t.set_title("About Korai");
 
             show_all();

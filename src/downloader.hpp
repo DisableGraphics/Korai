@@ -117,7 +117,6 @@ class DownloadDialog : public Gtk::Window
       set_titlebar(t);
       t.set_show_close_button();
       t.set_title(title);
-      t.set_border_width(1);
 
       e.signal_activate().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e));
       b_ok.signal_clicked().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e)); 
