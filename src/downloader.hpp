@@ -12,11 +12,12 @@
 inline void runCommandOnTerminal(GtkWidget * terminal, Gtk::Entry * e)
 {
   std::string toRun{"mangodl -D "};
-  if(position == -2)
+  int mangadex_downloader_exists = system("mangadex-downloader -v");
+  if(position == -2 && mangadex_downloader_exists != 127)
   {
     std::string mng{e->get_text()};
 
-    toRun = "mangadex-downloader --save-as cbz --unsafe --folder " + (std::string)std::filesystem::current_path() + "/downloads ";
+    toRun = "mangadex-downloader --save-as cbz --folder " + (std::string)std::filesystem::current_path() + "/downloads ";
 
     toRun += mng;
     
