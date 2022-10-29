@@ -1,4 +1,4 @@
-project('korai', 'cpp')
+project('korai', 'cpp', default_options : ['cpp_std=c++17'])
 gtkdep = [dependency('gtkmm-3.0'), dependency('webkit2gtk-4.0'), dependency('libarchive')]
 vtedep = [dependency('vte-2.91')]
 saveposdep = [dependency('webkit2gtk-web-extension-4.0')]
