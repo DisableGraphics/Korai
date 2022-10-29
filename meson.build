@@ -8,5 +8,3 @@ executable('korai', 'src/main.cpp', dependencies : gtkdep + vtedep, install : tr
 #executable('korai-nodownload', 'src/main.cpp', dependencies : gtkdep)
 
 library('savepos', 'src/extensions/pos_save.cpp', dependencies : saveposdep, install : true, install_dir : '/usr/share/korai/korai-extensions/')
-run_command('mkdir', '-p', 'builddir/korai-extensions', check : true)
-run_command('cp', 'builddir/libsavepos.so', 'builddir/korai-extensions/savepos.so', check : true)
