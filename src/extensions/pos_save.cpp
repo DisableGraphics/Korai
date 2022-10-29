@@ -6,6 +6,7 @@
 #include <thread>
 #include <filesystem>
 
+//Sleep these seconds (To not fry hard drives)
 #define SLEEP_PERIOD 5
 
 static void save_pos(WebKitWebPage * web_page)

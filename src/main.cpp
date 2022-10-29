@@ -7,7 +7,11 @@
 
 int main(int argc, char ** argv)
 {
-    saveFile = (std::string)std::filesystem::current_path() + "/chapter.conf";
+    saveFile = "/home/" + std::string(std::getenv("USER")) + "/.local/share/korai/chapter.conf";
+    if(!std::filesystem::exists(saveFile))
+    {
+        std::filesystem::create_directories("/home/" + std::string(std::getenv("USER")) + "/.local/share/korai");
+    }
     Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
     args::vector2d defsize{-1, -1};
     bool tutorial{false}, fullscreen{false}, goBack{false}, checkdownloader{false};

@@ -7,6 +7,7 @@
 #include <archive.h>
 #include <archive_entry.h>
 
+//Reverse the string
 inline std::string reverse_string(std::string s)
 {
     std::string tmp;

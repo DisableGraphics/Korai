@@ -64,7 +64,7 @@ class MainWindow : public Gtk::Window
             buttonsBox.pack_start(openButton);
             buttonsBox.pack_start(nextButton);
 
-            webkit_web_context_set_web_extensions_directory(webkit_web_context_get_default(), (std::filesystem::current_path().string() + "/korai-extensions").c_str());
+            webkit_web_context_set_web_extensions_directory(webkit_web_context_get_default(), "/usr/share/korai/korai-extensions");
 
             WebKitSettings * settings = WEBKIT_SETTINGS(webkit_settings_new());
             webkit_settings_set_enable_smooth_scrolling(settings, TRUE);
@@ -137,7 +137,6 @@ class MainWindow : public Gtk::Window
             webkit_web_view_reload(webview);
 
             g_signal_connect_object(webview,"load-changed",G_CALLBACK(on_load_changed), spin.gobj(),  G_CONNECT_AFTER);
-            g_signal_connect(webkit_web_context_get_default(), "initialize-web-extensions",G_CALLBACK(on_get_extensions), NULL);
             //These all the goddamn buttons. Man, not using Glade didn't pay off...
             openButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(open), webview, &titleBar));
             nextButton.signal_clicked().connect(sigc::bind(sigc::ptr_fun(next_chapter), webview, &titleBar));
@@ -177,9 +176,4 @@ class MainWindow : public Gtk::Window
         Gtk::VBox menuBox;
         Gtk::Separator sep1, sepabout, sep2;
 
-        static void on_get_extensions(WebKitWebContext *context, gpointer user_data)
-        {
-            std::string f{std::filesystem::current_path()};
-            webkit_web_context_set_web_extensions_directory(context, f.c_str());
-        }
 };

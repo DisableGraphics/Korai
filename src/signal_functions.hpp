@@ -233,7 +233,6 @@ inline void on_load(WebKitWebView * webView, Gtk::HeaderBar& titlebar)
         getline(chapter_file, file);
         if(std::filesystem::exists(file))
         {
-
             if(comp::isCompressed(file))
             {
                 folder = getFolder(file);
