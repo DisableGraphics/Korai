@@ -61,8 +61,7 @@ cd Korai
 meson setup builddir
 cd builddir && meson install
 ```
-*NOTE:* Versions below and including 0.2.1 use `make` to build the executable instead of meson.
-*NOTE 2:* Do not change the 'builddir' folder to another one. The meson.build has the builddir folder hardcoded to copy correctly the savepos.so extension file
+**NOTE:** Versions below and including 0.2.1 use `make` to build the executable instead of meson. Run it on the root directory. <br>
 # Troubleshooting
 1. The window is completely blank!
 - There's an issue surrounding WebKitGTK that can be traced to a faulty MIME types database (<a href=https://stackoverflow.com/questions/71734719/webkitgtk-doesnt-load-local-files>More information here</a>). To correct this, please open Korai and click the button named "Reload MIME types" (Under the menu button).
