@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=Git
+Type=Application
+Name=Korai
+Comment=\"Fast and feature-packed manga/comic book reader\"
+Exec=/usr/bin/korai
+Icon=/usr/share/icons/korai.xpm
+Terminal=false
+StartupNotify=false
+Categories=Network;" >> "${pkgname^}/korai.desktop"
