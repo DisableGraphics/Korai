@@ -40,21 +40,17 @@ Korai requires: <br>
 
 - **Ubuntu & Debian:** 
  ```
-sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev
+sudo apt install libgtkmm-3.0-dev libwebkit2gtk-4.0-dev libarchive-dev libvte-2.91-dev
 ``` 
+<a href=https://github.com/Gyro7/mangodl/releases/>And grab the latest downloader Linux release here</a> and put it on your PATH.
 - **Arch:** The AUR source is automatically updated with GitHub and automatically grabs the dependencies (Including mangadex-downloader)
 ```
 yay -S korai
 ```
-**Note:** The default chapter file path is `/home/$USER/.local/share/chapter.conf` if korai has been installed using this method. <br> <br> 
 Although you can still build Korai from source:
 ```
-sudo pacman -S gtkmm3 webkit2gtk libarchive 
+sudo pacman -S gtkmm3 webkit2gtk libarchive mangodl vte3 
 ```
-
-**If the integrated downloader is wanted:**
-- Ubuntu & Debian: <a href=https://github.com/Gyro7/mangodl/releases/>Please grab the latest Linux release here</a> and put it on your PATH. Also install libvte-2.91-dev with: `sudo apt install libvte-2.91-dev`
-- Arch: Automatically downloaded using the AUR (If you want to build Korai from source: `yay -S mangodl vte3`).
 - Any distro will need to `pip install mangadex-downloader` (you can run `korai -c` to install it) in order to get downloader integration with MangaDex
 
 # Building
@@ -62,16 +58,11 @@ To build Korai, please enter the following commands:
 ```
 git clone https://github.com/DisableGraphics/Korai
 cd Korai
-make
+meson setup builddir
+cd builddir && meson install
 ```
-**Note:** If the integrated downloader is not wanted, then execute:
-```
-git clone https://github.com/DisableGraphics/Korai
-cd Korai
-make korai-nodownload
-```
-instead
-
+*NOTE:* Versions below and including 0.2.1 use `make` to build the executable instead of meson.
+*NOTE 2:* Do not change the 'builddir' folder to another one. The meson.build has the builddir folder hardcoded to copy correctly the savepos.so extension file
 # Troubleshooting
 1. The window is completely blank!
 - There's an issue surrounding WebKitGTK that can be traced to a faulty MIME types database (<a href=https://stackoverflow.com/questions/71734719/webkitgtk-doesnt-load-local-files>More information here</a>). To correct this, please open Korai and click the button named "Reload MIME types" (Under the menu button).
