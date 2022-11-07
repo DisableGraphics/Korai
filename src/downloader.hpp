@@ -35,7 +35,7 @@ static void execute_order_66(VteTerminal *terminal, GPid pid, GError *error, gpo
     if (!terminal) return;
     if(position == -2)
     {
-      std::string toRun = "mangadex-downloader --save-as cbz --unsafe --folder " + (std::string)std::filesystem::current_path() + "/downloads ";
+      std::string toRun = "mangadex-downloader --save-as cbz --folder " + (std::string)std::filesystem::current_path() + "/downloads ";
       toRun += (char *) user_data;
       toRun  += " && exit\n";
       vte_terminal_feed_child(VTE_TERMINAL(terminal), toRun.c_str(), -1);
