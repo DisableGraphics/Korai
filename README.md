@@ -5,7 +5,6 @@ Next generation manga reader
 
 # Features
 - **Fast:** Despite using WebKitGtk, a port of an _entire_ browser engine to GTK, Korai is incredibly fast loading chapters.
-- **Reliable:** Works with manga/comic names that contain unusual characters and doesn't crash for no reason.
 - **Easy to use:** Everything is where it should be. No previous configuration required for almost anything.
 - **Integrated manga downloader (Optional):** Just write the title and Voilà!
 
