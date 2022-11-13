@@ -8,6 +8,7 @@
 #include "global_variables.hpp"
 #include "externalFunctions.h"
 #include "dialogs.hpp"
+#include <csignal>
 
 inline void runCommandOnTerminal(GtkWidget * terminal, Gtk::Entry * e)
 {
@@ -123,6 +124,11 @@ class DownloadDialog : public Gtk::Window
       b_ok.signal_clicked().connect(sigc::bind(sigc::ptr_fun(runCommandOnTerminal), vteTerminal, &e)); 
 
       box.pack_start(*terminal_widget); 
+    }
+    ~DownloadDialog()
+    {
+      //Does this solve the memory leak introduced in the download_manga function?
+      delete this;
     }
     void hide_all()
     {
